@@ -1,185 +1,68 @@
-/// @ref gtx_integer
+/// @ref gtc_integer
 
-namespace glm
-{
-	// pow
-	GLM_FUNC_QUALIFIER int pow(int x, uint y)
-	{
-		if(y == 0)
-			return x >= 0 ? 1 : -1;
-
-		int result = x;
-		for(uint i = 1; i < y; ++i)
-			result *= x;
-		return result;
-	}
-
-	// sqrt: From Christopher J. Musial, An integer square root, Graphics Gems, 1990, page 387
-	GLM_FUNC_QUALIFIER int sqrt(int x)
-	{
-		if(x <= 1) return x;
-
-		int NextTrial = x >> 1;
-		int CurrentAnswer;
-
-		do
-		{
-			CurrentAnswer = NextTrial;
-			NextTrial = (NextTrial + x / NextTrial) >> 1;
-		} while(NextTrial < CurrentAnswer);
-
-		return CurrentAnswer;
-	}
-
-// Henry Gordon Dietz: http://aggregate.org/MAGIC/
+namespace glm{
 namespace detail
 {
-	GLM_FUNC_QUALIFIER unsigned int ones32(unsigned int x)
+	template<length_t L, typename T, qualifier Q, bool Aligned>
+	struct compute_log2<L, T, Q, false, Aligned>
 	{
-		/* 32-bit recursive reduction using SWAR...
-		but first step is mapping 2-bit values
-		into sum of 2 1-bit values in sneaky way
-		*/
-		x -= ((x >> 1) & 0x55555555);
-		x = (((x >> 2) & 0x33333333) + (x & 0x33333333));
-		x = (((x >> 4) + x) & 0x0f0f0f0f);
-		x += (x >> 8);
-		x += (x >> 16);
-		return(x & 0x0000003f);
-	}
-}//namespace detail
-
-	// Henry Gordon Dietz: http://aggregate.org/MAGIC/
-/*
-	GLM_FUNC_QUALIFIER unsigned int floor_log2(unsigned int x)
-	{
-		x |= (x >> 1);
-		x |= (x >> 2);
-		x |= (x >> 4);
-		x |= (x >> 8);
-		x |= (x >> 16);
-
-		return _detail::ones32(x) >> 1;
-	}
-*/
-	// mod
-	GLM_FUNC_QUALIFIER int mod(int x, int y)
-	{
-		return ((x % y) + y) % y;
-	}
-
-	// factorial (!12 max, integer only)
-	template<typename genType>
-	GLM_FUNC_QUALIFIER genType factorial(genType const& x)
-	{
-		genType Temp = x;
-		genType Result;
-		for(Result = 1; Temp > 1; --Temp)
-			Result *= Temp;
-		return Result;
-	}
-
-	template<typename T, qualifier Q>
-	GLM_FUNC_QUALIFIER vec<2, T, Q> factorial(
-		vec<2, T, Q> const& x)
-	{
-		return vec<2, T, Q>(
-			factorial(x.x),
-			factorial(x.y));
-	}
-
-	template<typename T, qualifier Q>
-	GLM_FUNC_QUALIFIER vec<3, T, Q> factorial(
-		vec<3, T, Q> const& x)
-	{
-		return vec<3, T, Q>(
-			factorial(x.x),
-			factorial(x.y),
-			factorial(x.z));
-	}
-
-	template<typename T, qualifier Q>
-	GLM_FUNC_QUALIFIER vec<4, T, Q> factorial(
-		vec<4, T, Q> const& x)
-	{
-		return vec<4, T, Q>(
-			factorial(x.x),
-			factorial(x.y),
-			factorial(x.z),
-			factorial(x.w));
-	}
-
-	GLM_FUNC_QUALIFIER uint pow(uint x, uint y)
-	{
-		if (y == 0)
-			return 1u;
-
-		uint result = x;
-		for(uint i = 1; i < y; ++i)
-			result *= x;
-		return result;
-	}
-
-	GLM_FUNC_QUALIFIER uint sqrt(uint x)
-	{
-		if(x <= 1) return x;
-
-		uint NextTrial = x >> 1;
-		uint CurrentAnswer;
-
-		do
+		GLM_FUNC_QUALIFIER static vec<L, T, Q> call(vec<L, T, Q> const& v)
 		{
-			CurrentAnswer = NextTrial;
-			NextTrial = (NextTrial + x / NextTrial) >> 1;
-		} while(NextTrial < CurrentAnswer);
+			//Equivalent to return findMSB(vec); but save one function call in ASM with VC
+			//return findMSB(vec);
+			return vec<L, T, Q>(detail::compute_findMSB_vec<L, T, Q, sizeof(T) * 8>::call(v));
+		}
+	};
 
-		return CurrentAnswer;
-	}
-
-	GLM_FUNC_QUALIFIER uint mod(uint x, uint y)
+#	if GLM_HAS_BITSCAN_WINDOWS
+		template<qualifier Q, bool Aligned>
+		struct compute_log2<4, int, Q, false, Aligned>
+		{
+			GLM_FUNC_QUALIFIER static vec<4, int, Q> call(vec<4, int, Q> const& v)
+			{
+				vec<4, int, Q> Result;
+				_BitScanReverse(reinterpret_cast<unsigned long*>(&Result.x), v.x);
+				_BitScanReverse(reinterpret_cast<unsigned long*>(&Result.y), v.y);
+				_BitScanReverse(reinterpret_cast<unsigned long*>(&Result.z), v.z);
+				_BitScanReverse(reinterpret_cast<unsigned long*>(&Result.w), v.w);
+				return Result;
+			}
+		};
+#	endif//GLM_HAS_BITSCAN_WINDOWS
+}//namespace detail
+	template<typename genType>
+	GLM_FUNC_QUALIFIER int iround(genType x)
 	{
-		return x - y * (x / y);
+		GLM_STATIC_ASSERT(std::numeric_limits<genType>::is_iec559, "'iround' only accept floating-point inputs");
+		assert(static_cast<genType>(0.0) <= x);
+
+		return static_cast<int>(x + static_cast<genType>(0.5));
 	}
 
-#if(GLM_COMPILER & (GLM_COMPILER_VC | GLM_COMPILER_GCC))
-
-	GLM_FUNC_QUALIFIER unsigned int nlz(unsigned int x)
+	template<length_t L, typename T, qualifier Q>
+	GLM_FUNC_QUALIFIER vec<L, int, Q> iround(vec<L, T, Q> const& x)
 	{
-		return 31u - findMSB(x);
+		GLM_STATIC_ASSERT(std::numeric_limits<T>::is_iec559, "'iround' only accept floating-point inputs");
+		assert(all(lessThanEqual(vec<L, T, Q>(0), x)));
+
+		return vec<L, int, Q>(x + static_cast<T>(0.5));
 	}
 
-#else
-
-	// Hackers Delight: http://www.hackersdelight.org/HDcode/nlz.c.txt
-	GLM_FUNC_QUALIFIER unsigned int nlz(unsigned int x)
+	template<typename genType>
+	GLM_FUNC_QUALIFIER uint uround(genType x)
 	{
-		int y, m, n;
+		GLM_STATIC_ASSERT(std::numeric_limits<genType>::is_iec559, "'uround' only accept floating-point inputs");
+		assert(static_cast<genType>(0.0) <= x);
 
-		y = -int(x >> 16);      // If left half of x is 0,
-		m = (y >> 16) & 16;  // set n = 16.  If left half
-		n = 16 - m;          // is nonzero, set n = 0 and
-		x = x >> m;          // shift x right 16.
-							// Now x is of the form 0000xxxx.
-		y = x - 0x100;       // If positions 8-15 are 0,
-		m = (y >> 16) & 8;   // add 8 to n and shift x left 8.
-		n = n + m;
-		x = x << m;
-
-		y = x - 0x1000;      // If positions 12-15 are 0,
-		m = (y >> 16) & 4;   // add 4 to n and shift x left 4.
-		n = n + m;
-		x = x << m;
-
-		y = x - 0x4000;      // If positions 14-15 are 0,
-		m = (y >> 16) & 2;   // add 2 to n and shift x left 2.
-		n = n + m;
-		x = x << m;
-
-		y = x >> 14;         // Set y = 0, 1, 2, or 3.
-		m = y & ~(y >> 1);   // Set m = 0, 1, 2, or 2 resp.
-		return unsigned(n + 2 - m);
+		return static_cast<uint>(x + static_cast<genType>(0.5));
 	}
 
-#endif//(GLM_COMPILER)
+	template<length_t L, typename T, qualifier Q>
+	GLM_FUNC_QUALIFIER vec<L, uint, Q> uround(vec<L, T, Q> const& x)
+	{
+		GLM_STATIC_ASSERT(std::numeric_limits<T>::is_iec559, "'uround' only accept floating-point inputs");
+		assert(all(lessThanEqual(vec<L, T, Q>(0), x)));
 
+		return vec<L, uint, Q>(x + static_cast<T>(0.5));
+	}
 }//namespace glm

@@ -1,174 +1,173 @@
-/// @ref gtx_quaternion
-/// @file glm/gtx/quaternion.hpp
+/// @ref gtc_quaternion
+/// @file glm/gtc/quaternion.hpp
 ///
 /// @see core (dependence)
-/// @see gtx_extented_min_max (dependence)
+/// @see gtc_constants (dependence)
 ///
-/// @defgroup gtx_quaternion GLM_GTX_quaternion
-/// @ingroup gtx
+/// @defgroup gtc_quaternion GLM_GTC_quaternion
+/// @ingroup gtc
 ///
-/// Include <glm/gtx/quaternion.hpp> to use the features of this extension.
+/// Include <glm/gtc/quaternion.hpp> to use the features of this extension.
 ///
-/// Extented quaternion types and functions
+/// Defines a templated quaternion type and several quaternion operations.
 
 #pragma once
 
 // Dependency:
-#include "../glm.hpp"
 #include "../gtc/constants.hpp"
-#include "../gtc/quaternion.hpp"
-#include "../ext/quaternion_exponential.hpp"
-#include "../gtx/norm.hpp"
+#include "../gtc/matrix_transform.hpp"
+#include "../ext/vector_relational.hpp"
+#include "../ext/quaternion_common.hpp"
+#include "../ext/quaternion_float.hpp"
+#include "../ext/quaternion_float_precision.hpp"
+#include "../ext/quaternion_double.hpp"
+#include "../ext/quaternion_double_precision.hpp"
+#include "../ext/quaternion_relational.hpp"
+#include "../ext/quaternion_geometric.hpp"
+#include "../ext/quaternion_trigonometric.hpp"
+#include "../ext/quaternion_transform.hpp"
+#include "../detail/type_mat3x3.hpp"
+#include "../detail/type_mat4x4.hpp"
+#include "../detail/type_vec3.hpp"
+#include "../detail/type_vec4.hpp"
 
 #if GLM_MESSAGES == GLM_ENABLE && !defined(GLM_EXT_INCLUDED)
-#	ifndef GLM_ENABLE_EXPERIMENTAL
-#		pragma message("GLM: GLM_GTX_quaternion is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it.")
-#	else
-#		pragma message("GLM: GLM_GTX_quaternion extension included")
-#	endif
+#	pragma message("GLM: GLM_GTC_quaternion extension included")
 #endif
 
 namespace glm
 {
-	/// @addtogroup gtx_quaternion
+	/// @addtogroup gtc_quaternion
 	/// @{
 
-	/// Create an identity quaternion.
+	/// Returns euler angles, pitch as x, yaw as y, roll as z.
+	/// The result is expressed in radians.
 	///
-	/// @see gtx_quaternion
+	/// @tparam T Floating-point scalar types.
+	///
+	/// @see gtc_quaternion
 	template<typename T, qualifier Q>
-	GLM_FUNC_DECL GLM_CONSTEXPR qua<T, Q> quat_identity();
+	GLM_FUNC_DECL vec<3, T, Q> eulerAngles(qua<T, Q> const& x);
 
-	/// Compute a cross product between a quaternion and a vector.
+	/// Returns roll value of euler angles expressed in radians.
 	///
-	/// @see gtx_quaternion
+	/// @tparam T Floating-point scalar types.
+	///
+	/// @see gtc_quaternion
 	template<typename T, qualifier Q>
-	GLM_FUNC_DECL vec<3, T, Q> cross(
-		qua<T, Q> const& q,
-		vec<3, T, Q> const& v);
+	GLM_FUNC_DECL T roll(qua<T, Q> const& x);
 
-	//! Compute a cross product between a vector and a quaternion.
+	/// Returns pitch value of euler angles expressed in radians.
 	///
-	/// @see gtx_quaternion
+	/// @tparam T Floating-point scalar types.
+	///
+	/// @see gtc_quaternion
 	template<typename T, qualifier Q>
-	GLM_FUNC_DECL vec<3, T, Q> cross(
-		vec<3, T, Q> const& v,
-		qua<T, Q> const& q);
+	GLM_FUNC_DECL T pitch(qua<T, Q> const& x);
 
-	//! Compute a point on a path according squad equation.
-	//! q1 and q2 are control points; s1 and s2 are intermediate control points.
+	/// Returns yaw value of euler angles expressed in radians.
 	///
-	/// @see gtx_quaternion
+	/// @tparam T Floating-point scalar types.
+	///
+	/// @see gtc_quaternion
 	template<typename T, qualifier Q>
-	GLM_FUNC_DECL qua<T, Q> squad(
-		qua<T, Q> const& q1,
-		qua<T, Q> const& q2,
-		qua<T, Q> const& s1,
-		qua<T, Q> const& s2,
-		T const& h);
-
-	//! Returns an intermediate control point for squad interpolation.
-	///
-	/// @see gtx_quaternion
-	template<typename T, qualifier Q>
-	GLM_FUNC_DECL qua<T, Q> intermediate(
-		qua<T, Q> const& prev,
-		qua<T, Q> const& curr,
-		qua<T, Q> const& next);
-
-	//! Returns quarternion square root.
-	///
-	/// @see gtx_quaternion
-	//template<typename T, qualifier Q>
-	//qua<T, Q> sqrt(
-	//	qua<T, Q> const& q);
-
-	//! Rotates a 3 components vector by a quaternion.
-	///
-	/// @see gtx_quaternion
-	template<typename T, qualifier Q>
-	GLM_FUNC_DECL vec<3, T, Q> rotate(
-		qua<T, Q> const& q,
-		vec<3, T, Q> const& v);
-
-	/// Rotates a 4 components vector by a quaternion.
-	///
-	/// @see gtx_quaternion
-	template<typename T, qualifier Q>
-	GLM_FUNC_DECL vec<4, T, Q> rotate(
-		qua<T, Q> const& q,
-		vec<4, T, Q> const& v);
-
-	/// Extract the real component of a quaternion.
-	///
-	/// @see gtx_quaternion
-	template<typename T, qualifier Q>
-	GLM_FUNC_DECL T extractRealComponent(
-		qua<T, Q> const& q);
+	GLM_FUNC_DECL T yaw(qua<T, Q> const& x);
 
 	/// Converts a quaternion to a 3 * 3 matrix.
 	///
-	/// @see gtx_quaternion
+	/// @tparam T Floating-point scalar types.
+	///
+	/// @see gtc_quaternion
 	template<typename T, qualifier Q>
-	GLM_FUNC_DECL mat<3, 3, T, Q> toMat3(
-		qua<T, Q> const& x){return mat3_cast(x);}
+	GLM_FUNC_DECL mat<3, 3, T, Q> mat3_cast(qua<T, Q> const& x);
 
 	/// Converts a quaternion to a 4 * 4 matrix.
 	///
-	/// @see gtx_quaternion
-	template<typename T, qualifier Q>
-	GLM_FUNC_DECL mat<4, 4, T, Q> toMat4(
-		qua<T, Q> const& x){return mat4_cast(x);}
-
-	/// Converts a 3 * 3 matrix to a quaternion.
+	/// @tparam T Floating-point scalar types.
 	///
-	/// @see gtx_quaternion
+	/// @see gtc_quaternion
 	template<typename T, qualifier Q>
-	GLM_FUNC_DECL qua<T, Q> toQuat(
-		mat<3, 3, T, Q> const& x){return quat_cast(x);}
+	GLM_FUNC_DECL mat<4, 4, T, Q> mat4_cast(qua<T, Q> const& x);
 
-	/// Converts a 4 * 4 matrix to a quaternion.
+	/// Converts a pure rotation 3 * 3 matrix to a quaternion.
 	///
-	/// @see gtx_quaternion
-	template<typename T, qualifier Q>
-	GLM_FUNC_DECL qua<T, Q> toQuat(
-		mat<4, 4, T, Q> const& x){return quat_cast(x);}
-
-	/// Quaternion interpolation using the rotation short path.
+	/// @tparam T Floating-point scalar types.
 	///
-	/// @see gtx_quaternion
+	/// @see gtc_quaternion
 	template<typename T, qualifier Q>
-	GLM_FUNC_DECL qua<T, Q> shortMix(
-		qua<T, Q> const& x,
-		qua<T, Q> const& y,
-		T const& a);
+	GLM_FUNC_DECL qua<T, Q> quat_cast(mat<3, 3, T, Q> const& x);
 
-	/// Quaternion normalized linear interpolation.
+	/// Converts a pure rotation 4 * 4 matrix to a quaternion.
 	///
-	/// @see gtx_quaternion
-	template<typename T, qualifier Q>
-	GLM_FUNC_DECL qua<T, Q> fastMix(
-		qua<T, Q> const& x,
-		qua<T, Q> const& y,
-		T const& a);
-
-	/// Compute the rotation between two vectors.
-	/// @param orig vector, needs to be normalized
-	/// @param dest vector, needs to be normalized
+	/// @tparam T Floating-point scalar types.
 	///
-	/// @see gtx_quaternion
+	/// @see gtc_quaternion
 	template<typename T, qualifier Q>
-	GLM_FUNC_DECL qua<T, Q> rotation(
-		vec<3, T, Q> const& orig,
-		vec<3, T, Q> const& dest);
+	GLM_FUNC_DECL qua<T, Q> quat_cast(mat<4, 4, T, Q> const& x);
 
-	/// Returns the squared length of x.
+	/// Returns the component-wise comparison result of x < y.
 	///
-	/// @see gtx_quaternion
+	/// @tparam T Floating-point scalar types
+	/// @tparam Q Value from qualifier enum
+	///
+	/// @see ext_quaternion_relational
 	template<typename T, qualifier Q>
-	GLM_FUNC_DECL GLM_CONSTEXPR T length2(qua<T, Q> const& q);
+	GLM_FUNC_DECL vec<4, bool, Q> lessThan(qua<T, Q> const& x, qua<T, Q> const& y);
 
+	/// Returns the component-wise comparison of result x <= y.
+	///
+	/// @tparam T Floating-point scalar types
+	/// @tparam Q Value from qualifier enum
+	///
+	/// @see ext_quaternion_relational
+	template<typename T, qualifier Q>
+	GLM_FUNC_DECL vec<4, bool, Q> lessThanEqual(qua<T, Q> const& x, qua<T, Q> const& y);
+
+	/// Returns the component-wise comparison of result x > y.
+	///
+	/// @tparam T Floating-point scalar types
+	/// @tparam Q Value from qualifier enum
+	///
+	/// @see ext_quaternion_relational
+	template<typename T, qualifier Q>
+	GLM_FUNC_DECL vec<4, bool, Q> greaterThan(qua<T, Q> const& x, qua<T, Q> const& y);
+
+	/// Returns the component-wise comparison of result x >= y.
+	///
+	/// @tparam T Floating-point scalar types
+	/// @tparam Q Value from qualifier enum
+	///
+	/// @see ext_quaternion_relational
+	template<typename T, qualifier Q>
+	GLM_FUNC_DECL vec<4, bool, Q> greaterThanEqual(qua<T, Q> const& x, qua<T, Q> const& y);
+
+	/// Build a look at quaternion based on the default handedness.
+	///
+	/// @param direction Desired forward direction. Needs to be normalized.
+	/// @param up Up vector, how the camera is oriented. Typically (0, 1, 0).
+	template<typename T, qualifier Q>
+	GLM_FUNC_DECL qua<T, Q> quatLookAt(
+		vec<3, T, Q> const& direction,
+		vec<3, T, Q> const& up);
+
+	/// Build a right-handed look at quaternion.
+	///
+	/// @param direction Desired forward direction onto which the -z-axis gets mapped. Needs to be normalized.
+	/// @param up Up vector, how the camera is oriented. Typically (0, 1, 0).
+	template<typename T, qualifier Q>
+	GLM_FUNC_DECL qua<T, Q> quatLookAtRH(
+		vec<3, T, Q> const& direction,
+		vec<3, T, Q> const& up);
+
+	/// Build a left-handed look at quaternion.
+	///
+	/// @param direction Desired forward direction onto which the +z-axis gets mapped. Needs to be normalized.
+	/// @param up Up vector, how the camera is oriented. Typically (0, 1, 0).
+	template<typename T, qualifier Q>
+	GLM_FUNC_DECL qua<T, Q> quatLookAtLH(
+		vec<3, T, Q> const& direction,
+		vec<3, T, Q> const& up);
 	/// @}
-}//namespace glm
+} //namespace glm
 
 #include "quaternion.inl"

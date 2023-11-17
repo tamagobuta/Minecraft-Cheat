@@ -1,141 +1,84 @@
-/// @ref gtx_color_space
+/// @ref gtc_color_space
 
-namespace glm
+namespace glm{
+namespace detail
 {
-	template<typename T, qualifier Q>
-	GLM_FUNC_QUALIFIER vec<3, T, Q> rgbColor(const vec<3, T, Q>& hsvColor)
+	template<length_t L, typename T, qualifier Q>
+	struct compute_rgbToSrgb
 	{
-		vec<3, T, Q> hsv = hsvColor;
-		vec<3, T, Q> rgbColor;
-
-		if(hsv.y == static_cast<T>(0))
-			// achromatic (grey)
-			rgbColor = vec<3, T, Q>(hsv.z);
-		else
+		GLM_FUNC_QUALIFIER static vec<L, T, Q> call(vec<L, T, Q> const& ColorRGB, T GammaCorrection)
 		{
-			T sector = floor(hsv.x * (T(1) / T(60)));
-			T frac = (hsv.x * (T(1) / T(60))) - sector;
-			// factorial part of h
-			T o = hsv.z * (T(1) - hsv.y);
-			T p = hsv.z * (T(1) - hsv.y * frac);
-			T q = hsv.z * (T(1) - hsv.y * (T(1) - frac));
+			vec<L, T, Q> const ClampedColor(clamp(ColorRGB, static_cast<T>(0), static_cast<T>(1)));
 
-			switch(int(sector))
-			{
-			default:
-			case 0:
-				rgbColor.r = hsv.z;
-				rgbColor.g = q;
-				rgbColor.b = o;
-				break;
-			case 1:
-				rgbColor.r = p;
-				rgbColor.g = hsv.z;
-				rgbColor.b = o;
-				break;
-			case 2:
-				rgbColor.r = o;
-				rgbColor.g = hsv.z;
-				rgbColor.b = q;
-				break;
-			case 3:
-				rgbColor.r = o;
-				rgbColor.g = p;
-				rgbColor.b = hsv.z;
-				break;
-			case 4:
-				rgbColor.r = q;
-				rgbColor.g = o;
-				rgbColor.b = hsv.z;
-				break;
-			case 5:
-				rgbColor.r = hsv.z;
-				rgbColor.g = o;
-				rgbColor.b = p;
-				break;
-			}
+			return mix(
+				pow(ClampedColor, vec<L, T, Q>(GammaCorrection)) * static_cast<T>(1.055) - static_cast<T>(0.055),
+				ClampedColor * static_cast<T>(12.92),
+				lessThan(ClampedColor, vec<L, T, Q>(static_cast<T>(0.0031308))));
 		}
-
-		return rgbColor;
-	}
+	};
 
 	template<typename T, qualifier Q>
-	GLM_FUNC_QUALIFIER vec<3, T, Q> hsvColor(const vec<3, T, Q>& rgbColor)
+	struct compute_rgbToSrgb<4, T, Q>
 	{
-		vec<3, T, Q> hsv = rgbColor;
-		float Min   = min(min(rgbColor.r, rgbColor.g), rgbColor.b);
-		float Max   = max(max(rgbColor.r, rgbColor.g), rgbColor.b);
-		float Delta = Max - Min;
-
-		hsv.z = Max;
-
-		if(Max != static_cast<T>(0))
+		GLM_FUNC_QUALIFIER static vec<4, T, Q> call(vec<4, T, Q> const& ColorRGB, T GammaCorrection)
 		{
-			hsv.y = Delta / hsv.z;
-			T h = static_cast<T>(0);
-
-			if(rgbColor.r == Max)
-				// between yellow & magenta
-				h = static_cast<T>(0) + T(60) * (rgbColor.g - rgbColor.b) / Delta;
-			else if(rgbColor.g == Max)
-				// between cyan & yellow
-				h = static_cast<T>(120) + T(60) * (rgbColor.b - rgbColor.r) / Delta;
-			else
-				// between magenta & cyan
-				h = static_cast<T>(240) + T(60) * (rgbColor.r - rgbColor.g) / Delta;
-
-			if(h < T(0))
-				hsv.x = h + T(360);
-			else
-				hsv.x = h;
+			return vec<4, T, Q>(compute_rgbToSrgb<3, T, Q>::call(vec<3, T, Q>(ColorRGB), GammaCorrection), ColorRGB.w);
 		}
-		else
+	};
+
+	template<length_t L, typename T, qualifier Q>
+	struct compute_srgbToRgb
+	{
+		GLM_FUNC_QUALIFIER static vec<L, T, Q> call(vec<L, T, Q> const& ColorSRGB, T Gamma)
 		{
-			// If r = g = b = 0 then s = 0, h is undefined
-			hsv.y = static_cast<T>(0);
-			hsv.x = static_cast<T>(0);
+			return mix(
+				pow((ColorSRGB + static_cast<T>(0.055)) * static_cast<T>(0.94786729857819905213270142180095), vec<L, T, Q>(Gamma)),
+				ColorSRGB * static_cast<T>(0.07739938080495356037151702786378),
+				lessThanEqual(ColorSRGB, vec<L, T, Q>(static_cast<T>(0.04045))));
 		}
-
-		return hsv;
-	}
-
-	template<typename T>
-	GLM_FUNC_QUALIFIER mat<4, 4, T, defaultp> saturation(T const s)
-	{
-		vec<3, T, defaultp> rgbw = vec<3, T, defaultp>(T(0.2126), T(0.7152), T(0.0722));
-
-		vec<3, T, defaultp> const col((T(1) - s) * rgbw);
-
-		mat<4, 4, T, defaultp> result(T(1));
-		result[0][0] = col.x + s;
-		result[0][1] = col.x;
-		result[0][2] = col.x;
-		result[1][0] = col.y;
-		result[1][1] = col.y + s;
-		result[1][2] = col.y;
-		result[2][0] = col.z;
-		result[2][1] = col.z;
-		result[2][2] = col.z + s;
-
-		return result;
-	}
+	};
 
 	template<typename T, qualifier Q>
-	GLM_FUNC_QUALIFIER vec<3, T, Q> saturation(const T s, const vec<3, T, Q>& color)
+	struct compute_srgbToRgb<4, T, Q>
 	{
-		return vec<3, T, Q>(saturation(s) * vec<4, T, Q>(color, T(0)));
+		GLM_FUNC_QUALIFIER static vec<4, T, Q> call(vec<4, T, Q> const& ColorSRGB, T Gamma)
+		{
+			return vec<4, T, Q>(compute_srgbToRgb<3, T, Q>::call(vec<3, T, Q>(ColorSRGB), Gamma), ColorSRGB.w);
+		}
+	};
+}//namespace detail
+
+	template<length_t L, typename T, qualifier Q>
+	GLM_FUNC_QUALIFIER vec<L, T, Q> convertLinearToSRGB(vec<L, T, Q> const& ColorLinear)
+	{
+		return detail::compute_rgbToSrgb<L, T, Q>::call(ColorLinear, static_cast<T>(0.41666));
 	}
 
-	template<typename T, qualifier Q>
-	GLM_FUNC_QUALIFIER vec<4, T, Q> saturation(const T s, const vec<4, T, Q>& color)
+	// Based on Ian Taylor http://chilliant.blogspot.fr/2012/08/srgb-approximations-for-hlsl.html
+	template<>
+	GLM_FUNC_QUALIFIER vec<3, float, lowp> convertLinearToSRGB(vec<3, float, lowp> const& ColorLinear)
 	{
-		return saturation(s) * color;
+		vec<3, float, lowp> S1 = sqrt(ColorLinear);
+		vec<3, float, lowp> S2 = sqrt(S1);
+		vec<3, float, lowp> S3 = sqrt(S2);
+		return 0.662002687f * S1 + 0.684122060f * S2 - 0.323583601f * S3 - 0.0225411470f * ColorLinear;
 	}
 
-	template<typename T, qualifier Q>
-	GLM_FUNC_QUALIFIER T luminosity(const vec<3, T, Q>& color)
+	template<length_t L, typename T, qualifier Q>
+	GLM_FUNC_QUALIFIER vec<L, T, Q> convertLinearToSRGB(vec<L, T, Q> const& ColorLinear, T Gamma)
 	{
-		const vec<3, T, Q> tmp = vec<3, T, Q>(0.33, 0.59, 0.11);
-		return dot(color, tmp);
+		return detail::compute_rgbToSrgb<L, T, Q>::call(ColorLinear, static_cast<T>(1) / Gamma);
+	}
+
+	template<length_t L, typename T, qualifier Q>
+	GLM_FUNC_QUALIFIER vec<L, T, Q> convertSRGBToLinear(vec<L, T, Q> const& ColorSRGB)
+	{
+		return detail::compute_srgbToRgb<L, T, Q>::call(ColorSRGB, static_cast<T>(2.4));
+	}
+
+	template<length_t L, typename T, qualifier Q>
+	GLM_FUNC_QUALIFIER vec<L, T, Q> convertSRGBToLinear(vec<L, T, Q> const& ColorSRGB, T Gamma)
+	{
+		return detail::compute_srgbToRgb<L, T, Q>::call(ColorSRGB, Gamma);
 	}
 }//namespace glm

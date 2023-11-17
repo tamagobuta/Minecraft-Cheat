@@ -1,982 +1,1315 @@
-/// @ref gtx_type_aligned
-/// @file glm/gtx/type_aligned.hpp
+/// @ref gtc_type_aligned
+/// @file glm/gtc/type_aligned.hpp
 ///
 /// @see core (dependence)
-/// @see gtc_quaternion (dependence)
 ///
-/// @defgroup gtx_type_aligned GLM_GTX_type_aligned
-/// @ingroup gtx
+/// @defgroup gtc_type_aligned GLM_GTC_type_aligned
+/// @ingroup gtc
 ///
-/// Include <glm/gtx/type_aligned.hpp> to use the features of this extension.
+/// Include <glm/gtc/type_aligned.hpp> to use the features of this extension.
 ///
-/// Defines aligned types.
+/// Aligned types allowing SIMD optimizations of vectors and matrices types
 
 #pragma once
 
-// Dependency:
-#include "../gtc/type_precision.hpp"
-#include "../gtc/quaternion.hpp"
+#if (GLM_CONFIG_ALIGNED_GENTYPES == GLM_DISABLE)
+#	error "GLM: Aligned gentypes require to enable C++ language extensions. Define GLM_FORCE_ALIGNED_GENTYPES before including GLM headers to use aligned types."
+#endif
 
 #if GLM_MESSAGES == GLM_ENABLE && !defined(GLM_EXT_INCLUDED)
-#	ifndef GLM_ENABLE_EXPERIMENTAL
-#		pragma message("GLM: GLM_GTX_type_aligned is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it.")
-#	else
-#		pragma message("GLM: GLM_GTX_type_aligned extension included")
-#	endif
+# pragma message("GLM: GLM_GTC_type_aligned extension included")
 #endif
+
+#include "../mat4x4.hpp"
+#include "../mat4x3.hpp"
+#include "../mat4x2.hpp"
+#include "../mat3x4.hpp"
+#include "../mat3x3.hpp"
+#include "../mat3x2.hpp"
+#include "../mat2x4.hpp"
+#include "../mat2x3.hpp"
+#include "../mat2x2.hpp"
+#include "../gtc/vec1.hpp"
+#include "../vec2.hpp"
+#include "../vec3.hpp"
+#include "../vec4.hpp"
 
 namespace glm
 {
-	///////////////////////////
-	// Signed int vector types
-
-	/// @addtogroup gtx_type_aligned
+	/// @addtogroup gtc_type_aligned
 	/// @{
 
-	/// Low qualifier 8 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_int8, aligned_lowp_int8, 1);
+	// -- *vec1 --
 
-	/// Low qualifier 16 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_int16, aligned_lowp_int16, 2);
+	/// 1 component vector aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<1, float, aligned_highp>	aligned_highp_vec1;
 
-	/// Low qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_int32, aligned_lowp_int32, 4);
+	/// 1 component vector aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<1, float, aligned_mediump>	aligned_mediump_vec1;
 
-	/// Low qualifier 64 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_int64, aligned_lowp_int64, 8);
+	/// 1 component vector aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<1, float, aligned_lowp>		aligned_lowp_vec1;
 
+	/// 1 component vector aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<1, double, aligned_highp>	aligned_highp_dvec1;
 
-	/// Low qualifier 8 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_int8_t, aligned_lowp_int8_t, 1);
+	/// 1 component vector aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<1, double, aligned_mediump>	aligned_mediump_dvec1;
 
-	/// Low qualifier 16 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_int16_t, aligned_lowp_int16_t, 2);
+	/// 1 component vector aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<1, double, aligned_lowp>	aligned_lowp_dvec1;
 
-	/// Low qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_int32_t, aligned_lowp_int32_t, 4);
+	/// 1 component vector aligned in memory of signed integer numbers.
+	typedef vec<1, int, aligned_highp>		aligned_highp_ivec1;
 
-	/// Low qualifier 64 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_int64_t, aligned_lowp_int64_t, 8);
+	/// 1 component vector aligned in memory of signed integer numbers.
+	typedef vec<1, int, aligned_mediump>	aligned_mediump_ivec1;
 
+	/// 1 component vector aligned in memory of signed integer numbers.
+	typedef vec<1, int, aligned_lowp>		aligned_lowp_ivec1;
 
-	/// Low qualifier 8 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_i8, aligned_lowp_i8, 1);
+	/// 1 component vector aligned in memory of unsigned integer numbers.
+	typedef vec<1, uint, aligned_highp>		aligned_highp_uvec1;
 
-	/// Low qualifier 16 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_i16, aligned_lowp_i16, 2);
+	/// 1 component vector aligned in memory of unsigned integer numbers.
+	typedef vec<1, uint, aligned_mediump>	aligned_mediump_uvec1;
 
-	/// Low qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_i32, aligned_lowp_i32, 4);
+	/// 1 component vector aligned in memory of unsigned integer numbers.
+	typedef vec<1, uint, aligned_lowp>		aligned_lowp_uvec1;
 
-	/// Low qualifier 64 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_i64, aligned_lowp_i64, 8);
+	/// 1 component vector aligned in memory of bool values.
+	typedef vec<1, bool, aligned_highp>		aligned_highp_bvec1;
 
+	/// 1 component vector aligned in memory of bool values.
+	typedef vec<1, bool, aligned_mediump>	aligned_mediump_bvec1;
 
-	/// Medium qualifier 8 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_int8, aligned_mediump_int8, 1);
+	/// 1 component vector aligned in memory of bool values.
+	typedef vec<1, bool, aligned_lowp>		aligned_lowp_bvec1;
 
-	/// Medium qualifier 16 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_int16, aligned_mediump_int16, 2);
+	/// 1 component vector tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<1, float, packed_highp>		packed_highp_vec1;
 
-	/// Medium qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_int32, aligned_mediump_int32, 4);
+	/// 1 component vector tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<1, float, packed_mediump>	packed_mediump_vec1;
 
-	/// Medium qualifier 64 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_int64, aligned_mediump_int64, 8);
+	/// 1 component vector tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<1, float, packed_lowp>		packed_lowp_vec1;
 
+	/// 1 component vector tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<1, double, packed_highp>	packed_highp_dvec1;
 
-	/// Medium qualifier 8 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_int8_t, aligned_mediump_int8_t, 1);
+	/// 1 component vector tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<1, double, packed_mediump>	packed_mediump_dvec1;
 
-	/// Medium qualifier 16 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_int16_t, aligned_mediump_int16_t, 2);
+	/// 1 component vector tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<1, double, packed_lowp>		packed_lowp_dvec1;
 
-	/// Medium qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_int32_t, aligned_mediump_int32_t, 4);
+	/// 1 component vector tightly packed in memory of signed integer numbers.
+	typedef vec<1, int, packed_highp>		packed_highp_ivec1;
 
-	/// Medium qualifier 64 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_int64_t, aligned_mediump_int64_t, 8);
+	/// 1 component vector tightly packed in memory of signed integer numbers.
+	typedef vec<1, int, packed_mediump>		packed_mediump_ivec1;
 
+	/// 1 component vector tightly packed in memory of signed integer numbers.
+	typedef vec<1, int, packed_lowp>		packed_lowp_ivec1;
 
-	/// Medium qualifier 8 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_i8, aligned_mediump_i8, 1);
+	/// 1 component vector tightly packed in memory of unsigned integer numbers.
+	typedef vec<1, uint, packed_highp>		packed_highp_uvec1;
 
-	/// Medium qualifier 16 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_i16, aligned_mediump_i16, 2);
+	/// 1 component vector tightly packed in memory of unsigned integer numbers.
+	typedef vec<1, uint, packed_mediump>	packed_mediump_uvec1;
 
-	/// Medium qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_i32, aligned_mediump_i32, 4);
+	/// 1 component vector tightly packed in memory of unsigned integer numbers.
+	typedef vec<1, uint, packed_lowp>		packed_lowp_uvec1;
 
-	/// Medium qualifier 64 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_i64, aligned_mediump_i64, 8);
+	/// 1 component vector tightly packed in memory of bool values.
+	typedef vec<1, bool, packed_highp>		packed_highp_bvec1;
 
+	/// 1 component vector tightly packed in memory of bool values.
+	typedef vec<1, bool, packed_mediump>	packed_mediump_bvec1;
 
-	/// High qualifier 8 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_int8, aligned_highp_int8, 1);
+	/// 1 component vector tightly packed in memory of bool values.
+	typedef vec<1, bool, packed_lowp>		packed_lowp_bvec1;
 
-	/// High qualifier 16 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_int16, aligned_highp_int16, 2);
+	// -- *vec2 --
 
-	/// High qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_int32, aligned_highp_int32, 4);
+	/// 2 components vector aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<2, float, aligned_highp>	aligned_highp_vec2;
 
-	/// High qualifier 64 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_int64, aligned_highp_int64, 8);
+	/// 2 components vector aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<2, float, aligned_mediump>	aligned_mediump_vec2;
 
+	/// 2 components vector aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<2, float, aligned_lowp>		aligned_lowp_vec2;
 
-	/// High qualifier 8 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_int8_t, aligned_highp_int8_t, 1);
+	/// 2 components vector aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<2, double, aligned_highp>	aligned_highp_dvec2;
 
-	/// High qualifier 16 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_int16_t, aligned_highp_int16_t, 2);
+	/// 2 components vector aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<2, double, aligned_mediump>	aligned_mediump_dvec2;
 
-	/// High qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_int32_t, aligned_highp_int32_t, 4);
+	/// 2 components vector aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<2, double, aligned_lowp>	aligned_lowp_dvec2;
 
-	/// High qualifier 64 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_int64_t, aligned_highp_int64_t, 8);
+	/// 2 components vector aligned in memory of signed integer numbers.
+	typedef vec<2, int, aligned_highp>		aligned_highp_ivec2;
 
+	/// 2 components vector aligned in memory of signed integer numbers.
+	typedef vec<2, int, aligned_mediump>	aligned_mediump_ivec2;
 
-	/// High qualifier 8 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_i8, aligned_highp_i8, 1);
+	/// 2 components vector aligned in memory of signed integer numbers.
+	typedef vec<2, int, aligned_lowp>		aligned_lowp_ivec2;
 
-	/// High qualifier 16 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_i16, aligned_highp_i16, 2);
+	/// 2 components vector aligned in memory of unsigned integer numbers.
+	typedef vec<2, uint, aligned_highp>		aligned_highp_uvec2;
 
-	/// High qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_i32, aligned_highp_i32, 4);
+	/// 2 components vector aligned in memory of unsigned integer numbers.
+	typedef vec<2, uint, aligned_mediump>	aligned_mediump_uvec2;
 
-	/// High qualifier 64 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_i64, aligned_highp_i64, 8);
+	/// 2 components vector aligned in memory of unsigned integer numbers.
+	typedef vec<2, uint, aligned_lowp>		aligned_lowp_uvec2;
 
+	/// 2 components vector aligned in memory of bool values.
+	typedef vec<2, bool, aligned_highp>		aligned_highp_bvec2;
 
-	/// Default qualifier 8 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(int8, aligned_int8, 1);
+	/// 2 components vector aligned in memory of bool values.
+	typedef vec<2, bool, aligned_mediump>	aligned_mediump_bvec2;
 
-	/// Default qualifier 16 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(int16, aligned_int16, 2);
+	/// 2 components vector aligned in memory of bool values.
+	typedef vec<2, bool, aligned_lowp>		aligned_lowp_bvec2;
 
-	/// Default qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(int32, aligned_int32, 4);
+	/// 2 components vector tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<2, float, packed_highp>		packed_highp_vec2;
 
-	/// Default qualifier 64 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(int64, aligned_int64, 8);
+	/// 2 components vector tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<2, float, packed_mediump>	packed_mediump_vec2;
 
+	/// 2 components vector tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<2, float, packed_lowp>		packed_lowp_vec2;
 
-	/// Default qualifier 8 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(int8_t, aligned_int8_t, 1);
+	/// 2 components vector tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<2, double, packed_highp>	packed_highp_dvec2;
 
-	/// Default qualifier 16 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(int16_t, aligned_int16_t, 2);
+	/// 2 components vector tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<2, double, packed_mediump>	packed_mediump_dvec2;
 
-	/// Default qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(int32_t, aligned_int32_t, 4);
+	/// 2 components vector tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<2, double, packed_lowp>		packed_lowp_dvec2;
 
-	/// Default qualifier 64 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(int64_t, aligned_int64_t, 8);
+	/// 2 components vector tightly packed in memory of signed integer numbers.
+	typedef vec<2, int, packed_highp>		packed_highp_ivec2;
 
+	/// 2 components vector tightly packed in memory of signed integer numbers.
+	typedef vec<2, int, packed_mediump>		packed_mediump_ivec2;
 
-	/// Default qualifier 8 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i8, aligned_i8, 1);
+	/// 2 components vector tightly packed in memory of signed integer numbers.
+	typedef vec<2, int, packed_lowp>		packed_lowp_ivec2;
 
-	/// Default qualifier 16 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i16, aligned_i16, 2);
+	/// 2 components vector tightly packed in memory of unsigned integer numbers.
+	typedef vec<2, uint, packed_highp>		packed_highp_uvec2;
 
-	/// Default qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i32, aligned_i32, 4);
+	/// 2 components vector tightly packed in memory of unsigned integer numbers.
+	typedef vec<2, uint, packed_mediump>	packed_mediump_uvec2;
 
-	/// Default qualifier 64 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i64, aligned_i64, 8);
+	/// 2 components vector tightly packed in memory of unsigned integer numbers.
+	typedef vec<2, uint, packed_lowp>		packed_lowp_uvec2;
 
+	/// 2 components vector tightly packed in memory of bool values.
+	typedef vec<2, bool, packed_highp>		packed_highp_bvec2;
 
-	/// Default qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(ivec1, aligned_ivec1, 4);
+	/// 2 components vector tightly packed in memory of bool values.
+	typedef vec<2, bool, packed_mediump>	packed_mediump_bvec2;
 
-	/// Default qualifier 32 bit signed integer aligned vector of 2 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(ivec2, aligned_ivec2, 8);
+	/// 2 components vector tightly packed in memory of bool values.
+	typedef vec<2, bool, packed_lowp>		packed_lowp_bvec2;
 
-	/// Default qualifier 32 bit signed integer aligned vector of 3 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(ivec3, aligned_ivec3, 16);
+	// -- *vec3 --
 
-	/// Default qualifier 32 bit signed integer aligned vector of 4 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(ivec4, aligned_ivec4, 16);
+	/// 3 components vector aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<3, float, aligned_highp>	aligned_highp_vec3;
 
+	/// 3 components vector aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<3, float, aligned_mediump>	aligned_mediump_vec3;
 
-	/// Default qualifier 8 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i8vec1, aligned_i8vec1, 1);
+	/// 3 components vector aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<3, float, aligned_lowp>		aligned_lowp_vec3;
 
-	/// Default qualifier 8 bit signed integer aligned vector of 2 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i8vec2, aligned_i8vec2, 2);
+	/// 3 components vector aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<3, double, aligned_highp>	aligned_highp_dvec3;
 
-	/// Default qualifier 8 bit signed integer aligned vector of 3 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i8vec3, aligned_i8vec3, 4);
+	/// 3 components vector aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<3, double, aligned_mediump>	aligned_mediump_dvec3;
 
-	/// Default qualifier 8 bit signed integer aligned vector of 4 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i8vec4, aligned_i8vec4, 4);
+	/// 3 components vector aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<3, double, aligned_lowp>	aligned_lowp_dvec3;
 
+	/// 3 components vector aligned in memory of signed integer numbers.
+	typedef vec<3, int, aligned_highp>		aligned_highp_ivec3;
 
-	/// Default qualifier 16 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i16vec1, aligned_i16vec1, 2);
+	/// 3 components vector aligned in memory of signed integer numbers.
+	typedef vec<3, int, aligned_mediump>	aligned_mediump_ivec3;
 
-	/// Default qualifier 16 bit signed integer aligned vector of 2 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i16vec2, aligned_i16vec2, 4);
+	/// 3 components vector aligned in memory of signed integer numbers.
+	typedef vec<3, int, aligned_lowp>		aligned_lowp_ivec3;
 
-	/// Default qualifier 16 bit signed integer aligned vector of 3 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i16vec3, aligned_i16vec3, 8);
+	/// 3 components vector aligned in memory of unsigned integer numbers.
+	typedef vec<3, uint, aligned_highp>		aligned_highp_uvec3;
 
-	/// Default qualifier 16 bit signed integer aligned vector of 4 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i16vec4, aligned_i16vec4, 8);
+	/// 3 components vector aligned in memory of unsigned integer numbers.
+	typedef vec<3, uint, aligned_mediump>	aligned_mediump_uvec3;
 
+	/// 3 components vector aligned in memory of unsigned integer numbers.
+	typedef vec<3, uint, aligned_lowp>		aligned_lowp_uvec3;
 
-	/// Default qualifier 32 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i32vec1, aligned_i32vec1, 4);
+	/// 3 components vector aligned in memory of bool values.
+	typedef vec<3, bool, aligned_highp>		aligned_highp_bvec3;
 
-	/// Default qualifier 32 bit signed integer aligned vector of 2 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i32vec2, aligned_i32vec2, 8);
+	/// 3 components vector aligned in memory of bool values.
+	typedef vec<3, bool, aligned_mediump>	aligned_mediump_bvec3;
 
-	/// Default qualifier 32 bit signed integer aligned vector of 3 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i32vec3, aligned_i32vec3, 16);
+	/// 3 components vector aligned in memory of bool values.
+	typedef vec<3, bool, aligned_lowp>		aligned_lowp_bvec3;
 
-	/// Default qualifier 32 bit signed integer aligned vector of 4 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i32vec4, aligned_i32vec4, 16);
+	/// 3 components vector tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<3, float, packed_highp>		packed_highp_vec3;
 
+	/// 3 components vector tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<3, float, packed_mediump>	packed_mediump_vec3;
 
-	/// Default qualifier 64 bit signed integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i64vec1, aligned_i64vec1, 8);
+	/// 3 components vector tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<3, float, packed_lowp>		packed_lowp_vec3;
 
-	/// Default qualifier 64 bit signed integer aligned vector of 2 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i64vec2, aligned_i64vec2, 16);
+	/// 3 components vector tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<3, double, packed_highp>	packed_highp_dvec3;
 
-	/// Default qualifier 64 bit signed integer aligned vector of 3 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i64vec3, aligned_i64vec3, 32);
+	/// 3 components vector tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<3, double, packed_mediump>	packed_mediump_dvec3;
 
-	/// Default qualifier 64 bit signed integer aligned vector of 4 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i64vec4, aligned_i64vec4, 32);
+	/// 3 components vector tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<3, double, packed_lowp>		packed_lowp_dvec3;
 
+	/// 3 components vector tightly packed in memory of signed integer numbers.
+	typedef vec<3, int, packed_highp>		packed_highp_ivec3;
 
-	/////////////////////////////
-	// Unsigned int vector types
+	/// 3 components vector tightly packed in memory of signed integer numbers.
+	typedef vec<3, int, packed_mediump>		packed_mediump_ivec3;
 
-	/// Low qualifier 8 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_uint8, aligned_lowp_uint8, 1);
+	/// 3 components vector tightly packed in memory of signed integer numbers.
+	typedef vec<3, int, packed_lowp>		packed_lowp_ivec3;
 
-	/// Low qualifier 16 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_uint16, aligned_lowp_uint16, 2);
+	/// 3 components vector tightly packed in memory of unsigned integer numbers.
+	typedef vec<3, uint, packed_highp>		packed_highp_uvec3;
 
-	/// Low qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_uint32, aligned_lowp_uint32, 4);
+	/// 3 components vector tightly packed in memory of unsigned integer numbers.
+	typedef vec<3, uint, packed_mediump>	packed_mediump_uvec3;
 
-	/// Low qualifier 64 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_uint64, aligned_lowp_uint64, 8);
+	/// 3 components vector tightly packed in memory of unsigned integer numbers.
+	typedef vec<3, uint, packed_lowp>		packed_lowp_uvec3;
 
+	/// 3 components vector tightly packed in memory of bool values.
+	typedef vec<3, bool, packed_highp>		packed_highp_bvec3;
 
-	/// Low qualifier 8 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_uint8_t, aligned_lowp_uint8_t, 1);
+	/// 3 components vector tightly packed in memory of bool values.
+	typedef vec<3, bool, packed_mediump>	packed_mediump_bvec3;
 
-	/// Low qualifier 16 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_uint16_t, aligned_lowp_uint16_t, 2);
+	/// 3 components vector tightly packed in memory of bool values.
+	typedef vec<3, bool, packed_lowp>		packed_lowp_bvec3;
 
-	/// Low qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_uint32_t, aligned_lowp_uint32_t, 4);
+	// -- *vec4 --
 
-	/// Low qualifier 64 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_uint64_t, aligned_lowp_uint64_t, 8);
+	/// 4 components vector aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<4, float, aligned_highp>	aligned_highp_vec4;
 
+	/// 4 components vector aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<4, float, aligned_mediump>	aligned_mediump_vec4;
 
-	/// Low qualifier 8 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_u8, aligned_lowp_u8, 1);
+	/// 4 components vector aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<4, float, aligned_lowp>		aligned_lowp_vec4;
 
-	/// Low qualifier 16 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_u16, aligned_lowp_u16, 2);
+	/// 4 components vector aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<4, double, aligned_highp>	aligned_highp_dvec4;
 
-	/// Low qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_u32, aligned_lowp_u32, 4);
+	/// 4 components vector aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<4, double, aligned_mediump>	aligned_mediump_dvec4;
 
-	/// Low qualifier 64 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(lowp_u64, aligned_lowp_u64, 8);
+	/// 4 components vector aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<4, double, aligned_lowp>	aligned_lowp_dvec4;
 
+	/// 4 components vector aligned in memory of signed integer numbers.
+	typedef vec<4, int, aligned_highp>		aligned_highp_ivec4;
 
-	/// Medium qualifier 8 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_uint8, aligned_mediump_uint8, 1);
+	/// 4 components vector aligned in memory of signed integer numbers.
+	typedef vec<4, int, aligned_mediump>	aligned_mediump_ivec4;
 
-	/// Medium qualifier 16 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_uint16, aligned_mediump_uint16, 2);
+	/// 4 components vector aligned in memory of signed integer numbers.
+	typedef vec<4, int, aligned_lowp>		aligned_lowp_ivec4;
 
-	/// Medium qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_uint32, aligned_mediump_uint32, 4);
+	/// 4 components vector aligned in memory of unsigned integer numbers.
+	typedef vec<4, uint, aligned_highp>		aligned_highp_uvec4;
 
-	/// Medium qualifier 64 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_uint64, aligned_mediump_uint64, 8);
+	/// 4 components vector aligned in memory of unsigned integer numbers.
+	typedef vec<4, uint, aligned_mediump>	aligned_mediump_uvec4;
 
+	/// 4 components vector aligned in memory of unsigned integer numbers.
+	typedef vec<4, uint, aligned_lowp>		aligned_lowp_uvec4;
 
-	/// Medium qualifier 8 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_uint8_t, aligned_mediump_uint8_t, 1);
+	/// 4 components vector aligned in memory of bool values.
+	typedef vec<4, bool, aligned_highp>		aligned_highp_bvec4;
 
-	/// Medium qualifier 16 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_uint16_t, aligned_mediump_uint16_t, 2);
+	/// 4 components vector aligned in memory of bool values.
+	typedef vec<4, bool, aligned_mediump>	aligned_mediump_bvec4;
 
-	/// Medium qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_uint32_t, aligned_mediump_uint32_t, 4);
+	/// 4 components vector aligned in memory of bool values.
+	typedef vec<4, bool, aligned_lowp>		aligned_lowp_bvec4;
 
-	/// Medium qualifier 64 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_uint64_t, aligned_mediump_uint64_t, 8);
+	/// 4 components vector tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<4, float, packed_highp>		packed_highp_vec4;
 
+	/// 4 components vector tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<4, float, packed_mediump>	packed_mediump_vec4;
 
-	/// Medium qualifier 8 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_u8, aligned_mediump_u8, 1);
+	/// 4 components vector tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<4, float, packed_lowp>		packed_lowp_vec4;
 
-	/// Medium qualifier 16 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_u16, aligned_mediump_u16, 2);
+	/// 4 components vector tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef vec<4, double, packed_highp>	packed_highp_dvec4;
 
-	/// Medium qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_u32, aligned_mediump_u32, 4);
+	/// 4 components vector tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef vec<4, double, packed_mediump>	packed_mediump_dvec4;
 
-	/// Medium qualifier 64 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mediump_u64, aligned_mediump_u64, 8);
+	/// 4 components vector tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef vec<4, double, packed_lowp>		packed_lowp_dvec4;
 
+	/// 4 components vector tightly packed in memory of signed integer numbers.
+	typedef vec<4, int, packed_highp>		packed_highp_ivec4;
 
-	/// High qualifier 8 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_uint8, aligned_highp_uint8, 1);
+	/// 4 components vector tightly packed in memory of signed integer numbers.
+	typedef vec<4, int, packed_mediump>		packed_mediump_ivec4;
 
-	/// High qualifier 16 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_uint16, aligned_highp_uint16, 2);
+	/// 4 components vector tightly packed in memory of signed integer numbers.
+	typedef vec<4, int, packed_lowp>		packed_lowp_ivec4;
 
-	/// High qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_uint32, aligned_highp_uint32, 4);
+	/// 4 components vector tightly packed in memory of unsigned integer numbers.
+	typedef vec<4, uint, packed_highp>		packed_highp_uvec4;
 
-	/// High qualifier 64 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_uint64, aligned_highp_uint64, 8);
+	/// 4 components vector tightly packed in memory of unsigned integer numbers.
+	typedef vec<4, uint, packed_mediump>	packed_mediump_uvec4;
 
+	/// 4 components vector tightly packed in memory of unsigned integer numbers.
+	typedef vec<4, uint, packed_lowp>		packed_lowp_uvec4;
 
-	/// High qualifier 8 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_uint8_t, aligned_highp_uint8_t, 1);
+	/// 4 components vector tightly packed in memory of bool values.
+	typedef vec<4, bool, packed_highp>		packed_highp_bvec4;
 
-	/// High qualifier 16 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_uint16_t, aligned_highp_uint16_t, 2);
+	/// 4 components vector tightly packed in memory of bool values.
+	typedef vec<4, bool, packed_mediump>	packed_mediump_bvec4;
 
-	/// High qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_uint32_t, aligned_highp_uint32_t, 4);
+	/// 4 components vector tightly packed in memory of bool values.
+	typedef vec<4, bool, packed_lowp>		packed_lowp_bvec4;
 
-	/// High qualifier 64 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_uint64_t, aligned_highp_uint64_t, 8);
+	// -- *mat2 --
 
+	/// 2 by 2 matrix aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 2, float, aligned_highp>		aligned_highp_mat2;
 
-	/// High qualifier 8 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_u8, aligned_highp_u8, 1);
+	/// 2 by 2 matrix aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 2, float, aligned_mediump>	aligned_mediump_mat2;
 
-	/// High qualifier 16 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_u16, aligned_highp_u16, 2);
+	/// 2 by 2 matrix aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 2, float, aligned_lowp>		aligned_lowp_mat2;
 
-	/// High qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_u32, aligned_highp_u32, 4);
+	/// 2 by 2 matrix aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 2, double, aligned_highp>	aligned_highp_dmat2;
 
-	/// High qualifier 64 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(highp_u64, aligned_highp_u64, 8);
+	/// 2 by 2 matrix aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 2, double, aligned_mediump>	aligned_mediump_dmat2;
 
+	/// 2 by 2 matrix aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 2, double, aligned_lowp>		aligned_lowp_dmat2;
 
-	/// Default qualifier 8 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(uint8, aligned_uint8, 1);
+	/// 2 by 2 matrix tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 2, float, packed_highp>		packed_highp_mat2;
 
-	/// Default qualifier 16 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(uint16, aligned_uint16, 2);
+	/// 2 by 2 matrix tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 2, float, packed_mediump>	packed_mediump_mat2;
 
-	/// Default qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(uint32, aligned_uint32, 4);
+	/// 2 by 2 matrix tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 2, float, packed_lowp>		packed_lowp_mat2;
 
-	/// Default qualifier 64 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(uint64, aligned_uint64, 8);
+	/// 2 by 2 matrix tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 2, double, packed_highp>		packed_highp_dmat2;
 
+	/// 2 by 2 matrix tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 2, double, packed_mediump>	packed_mediump_dmat2;
 
-	/// Default qualifier 8 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(uint8_t, aligned_uint8_t, 1);
+	/// 2 by 2 matrix tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 2, double, packed_lowp>		packed_lowp_dmat2;
 
-	/// Default qualifier 16 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(uint16_t, aligned_uint16_t, 2);
+	// -- *mat3 --
 
-	/// Default qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(uint32_t, aligned_uint32_t, 4);
+	/// 3 by 3 matrix aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 3, float, aligned_highp>		aligned_highp_mat3;
 
-	/// Default qualifier 64 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(uint64_t, aligned_uint64_t, 8);
+	/// 3 by 3 matrix aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 3, float, aligned_mediump>	aligned_mediump_mat3;
 
+	/// 3 by 3 matrix aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 3, float, aligned_lowp>		aligned_lowp_mat3;
 
-	/// Default qualifier 8 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u8, aligned_u8, 1);
+	/// 3 by 3 matrix aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 3, double, aligned_highp>	aligned_highp_dmat3;
 
-	/// Default qualifier 16 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u16, aligned_u16, 2);
+	/// 3 by 3 matrix aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 3, double, aligned_mediump>	aligned_mediump_dmat3;
 
-	/// Default qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u32, aligned_u32, 4);
+	/// 3 by 3 matrix aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 3, double, aligned_lowp>		aligned_lowp_dmat3;
 
-	/// Default qualifier 64 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u64, aligned_u64, 8);
+	/// 3 by 3 matrix tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 3, float, packed_highp>		packed_highp_mat3;
 
+	/// 3 by 3 matrix tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 3, float, packed_mediump>	packed_mediump_mat3;
 
-	/// Default qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(uvec1, aligned_uvec1, 4);
+	/// 3 by 3 matrix tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 3, float, packed_lowp>		packed_lowp_mat3;
 
-	/// Default qualifier 32 bit unsigned integer aligned vector of 2 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(uvec2, aligned_uvec2, 8);
+	/// 3 by 3 matrix tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 3, double, packed_highp>		packed_highp_dmat3;
 
-	/// Default qualifier 32 bit unsigned integer aligned vector of 3 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(uvec3, aligned_uvec3, 16);
+	/// 3 by 3 matrix tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 3, double, packed_mediump>	packed_mediump_dmat3;
 
-	/// Default qualifier 32 bit unsigned integer aligned vector of 4 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(uvec4, aligned_uvec4, 16);
+	/// 3 by 3 matrix tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 3, double, packed_lowp>		packed_lowp_dmat3;
 
+	// -- *mat4 --
 
-	/// Default qualifier 8 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u8vec1, aligned_u8vec1, 1);
+	/// 4 by 4 matrix aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 4, float, aligned_highp>		aligned_highp_mat4;
 
-	/// Default qualifier 8 bit unsigned integer aligned vector of 2 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u8vec2, aligned_u8vec2, 2);
+	/// 4 by 4 matrix aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 4, float, aligned_mediump>	aligned_mediump_mat4;
 
-	/// Default qualifier 8 bit unsigned integer aligned vector of 3 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u8vec3, aligned_u8vec3, 4);
+	/// 4 by 4 matrix aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 4, float, aligned_lowp>		aligned_lowp_mat4;
 
-	/// Default qualifier 8 bit unsigned integer aligned vector of 4 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u8vec4, aligned_u8vec4, 4);
+	/// 4 by 4 matrix aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 4, double, aligned_highp>	aligned_highp_dmat4;
 
+	/// 4 by 4 matrix aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 4, double, aligned_mediump>	aligned_mediump_dmat4;
 
-	/// Default qualifier 16 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u16vec1, aligned_u16vec1, 2);
+	/// 4 by 4 matrix aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 4, double, aligned_lowp>		aligned_lowp_dmat4;
 
-	/// Default qualifier 16 bit unsigned integer aligned vector of 2 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u16vec2, aligned_u16vec2, 4);
+	/// 4 by 4 matrix tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 4, float, packed_highp>		packed_highp_mat4;
 
-	/// Default qualifier 16 bit unsigned integer aligned vector of 3 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u16vec3, aligned_u16vec3, 8);
+	/// 4 by 4 matrix tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 4, float, packed_mediump>	packed_mediump_mat4;
 
-	/// Default qualifier 16 bit unsigned integer aligned vector of 4 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u16vec4, aligned_u16vec4, 8);
+	/// 4 by 4 matrix tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 4, float, packed_lowp>		packed_lowp_mat4;
 
+	/// 4 by 4 matrix tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 4, double, packed_highp>		packed_highp_dmat4;
 
-	/// Default qualifier 32 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u32vec1, aligned_u32vec1, 4);
+	/// 4 by 4 matrix tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 4, double, packed_mediump>	packed_mediump_dmat4;
 
-	/// Default qualifier 32 bit unsigned integer aligned vector of 2 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u32vec2, aligned_u32vec2, 8);
+	/// 4 by 4 matrix tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 4, double, packed_lowp>		packed_lowp_dmat4;
 
-	/// Default qualifier 32 bit unsigned integer aligned vector of 3 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u32vec3, aligned_u32vec3, 16);
+	// -- *mat2x2 --
 
-	/// Default qualifier 32 bit unsigned integer aligned vector of 4 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u32vec4, aligned_u32vec4, 16);
+	/// 2 by 2 matrix aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 2, float, aligned_highp>		aligned_highp_mat2x2;
 
+	/// 2 by 2 matrix aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 2, float, aligned_mediump>	aligned_mediump_mat2x2;
 
-	/// Default qualifier 64 bit unsigned integer aligned scalar type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u64vec1, aligned_u64vec1, 8);
+	/// 2 by 2 matrix aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 2, float, aligned_lowp>		aligned_lowp_mat2x2;
 
-	/// Default qualifier 64 bit unsigned integer aligned vector of 2 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u64vec2, aligned_u64vec2, 16);
+	/// 2 by 2 matrix aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 2, double, aligned_highp>	aligned_highp_dmat2x2;
 
-	/// Default qualifier 64 bit unsigned integer aligned vector of 3 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u64vec3, aligned_u64vec3, 32);
+	/// 2 by 2 matrix aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 2, double, aligned_mediump>	aligned_mediump_dmat2x2;
 
-	/// Default qualifier 64 bit unsigned integer aligned vector of 4 components type.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(u64vec4, aligned_u64vec4, 32);
+	/// 2 by 2 matrix aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 2, double, aligned_lowp>		aligned_lowp_dmat2x2;
 
+	/// 2 by 2 matrix tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 2, float, packed_highp>		packed_highp_mat2x2;
 
-	//////////////////////
-	// Float vector types
+	/// 2 by 2 matrix tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 2, float, packed_mediump>	packed_mediump_mat2x2;
 
-	/// 32 bit single-qualifier floating-point aligned scalar.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(float32, aligned_float32, 4);
+	/// 2 by 2 matrix tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 2, float, packed_lowp>		packed_lowp_mat2x2;
 
-	/// 32 bit single-qualifier floating-point aligned scalar.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(float32_t, aligned_float32_t, 4);
+	/// 2 by 2 matrix tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 2, double, packed_highp>		packed_highp_dmat2x2;
 
-	/// 32 bit single-qualifier floating-point aligned scalar.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(float32, aligned_f32, 4);
+	/// 2 by 2 matrix tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 2, double, packed_mediump>	packed_mediump_dmat2x2;
 
-#	ifndef GLM_FORCE_SINGLE_ONLY
+	/// 2 by 2 matrix tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 2, double, packed_lowp>		packed_lowp_dmat2x2;
 
-	/// 64 bit double-qualifier floating-point aligned scalar.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(float64, aligned_float64, 8);
+	// -- *mat2x3 --
 
-	/// 64 bit double-qualifier floating-point aligned scalar.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(float64_t, aligned_float64_t, 8);
+	/// 2 by 3 matrix aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 3, float, aligned_highp>		aligned_highp_mat2x3;
 
-	/// 64 bit double-qualifier floating-point aligned scalar.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(float64, aligned_f64, 8);
+	/// 2 by 3 matrix aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 3, float, aligned_mediump>	aligned_mediump_mat2x3;
 
-#	endif//GLM_FORCE_SINGLE_ONLY
+	/// 2 by 3 matrix aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 3, float, aligned_lowp>		aligned_lowp_mat2x3;
 
+	/// 2 by 3 matrix aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 3, double, aligned_highp>	aligned_highp_dmat2x3;
 
-	/// Single-qualifier floating-point aligned vector of 1 component.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(vec1, aligned_vec1, 4);
+	/// 2 by 3 matrix aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 3, double, aligned_mediump>	aligned_mediump_dmat2x3;
 
-	/// Single-qualifier floating-point aligned vector of 2 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(vec2, aligned_vec2, 8);
+	/// 2 by 3 matrix aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 3, double, aligned_lowp>		aligned_lowp_dmat2x3;
 
-	/// Single-qualifier floating-point aligned vector of 3 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(vec3, aligned_vec3, 16);
+	/// 2 by 3 matrix tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 3, float, packed_highp>		packed_highp_mat2x3;
 
-	/// Single-qualifier floating-point aligned vector of 4 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(vec4, aligned_vec4, 16);
+	/// 2 by 3 matrix tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 3, float, packed_mediump>	packed_mediump_mat2x3;
 
+	/// 2 by 3 matrix tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 3, float, packed_lowp>		packed_lowp_mat2x3;
 
-	/// Single-qualifier floating-point aligned vector of 1 component.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fvec1, aligned_fvec1, 4);
+	/// 2 by 3 matrix tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 3, double, packed_highp>		packed_highp_dmat2x3;
 
-	/// Single-qualifier floating-point aligned vector of 2 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fvec2, aligned_fvec2, 8);
+	/// 2 by 3 matrix tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 3, double, packed_mediump>	packed_mediump_dmat2x3;
 
-	/// Single-qualifier floating-point aligned vector of 3 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fvec3, aligned_fvec3, 16);
+	/// 2 by 3 matrix tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 3, double, packed_lowp>		packed_lowp_dmat2x3;
 
-	/// Single-qualifier floating-point aligned vector of 4 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fvec4, aligned_fvec4, 16);
+	// -- *mat2x4 --
 
+	/// 2 by 4 matrix aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 4, float, aligned_highp>		aligned_highp_mat2x4;
 
-	/// Single-qualifier floating-point aligned vector of 1 component.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32vec1, aligned_f32vec1, 4);
+	/// 2 by 4 matrix aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 4, float, aligned_mediump>	aligned_mediump_mat2x4;
 
-	/// Single-qualifier floating-point aligned vector of 2 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32vec2, aligned_f32vec2, 8);
+	/// 2 by 4 matrix aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 4, float, aligned_lowp>		aligned_lowp_mat2x4;
 
-	/// Single-qualifier floating-point aligned vector of 3 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32vec3, aligned_f32vec3, 16);
+	/// 2 by 4 matrix aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 4, double, aligned_highp>	aligned_highp_dmat2x4;
 
-	/// Single-qualifier floating-point aligned vector of 4 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32vec4, aligned_f32vec4, 16);
+	/// 2 by 4 matrix aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 4, double, aligned_mediump>	aligned_mediump_dmat2x4;
 
+	/// 2 by 4 matrix aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 4, double, aligned_lowp>		aligned_lowp_dmat2x4;
 
-	/// Double-qualifier floating-point aligned vector of 1 component.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(dvec1, aligned_dvec1, 8);
+	/// 2 by 4 matrix tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 4, float, packed_highp>		packed_highp_mat2x4;
 
-	/// Double-qualifier floating-point aligned vector of 2 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(dvec2, aligned_dvec2, 16);
+	/// 2 by 4 matrix tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 4, float, packed_mediump>	packed_mediump_mat2x4;
 
-	/// Double-qualifier floating-point aligned vector of 3 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(dvec3, aligned_dvec3, 32);
+	/// 2 by 4 matrix tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 4, float, packed_lowp>		packed_lowp_mat2x4;
 
-	/// Double-qualifier floating-point aligned vector of 4 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(dvec4, aligned_dvec4, 32);
+	/// 2 by 4 matrix tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<2, 4, double, packed_highp>		packed_highp_dmat2x4;
 
+	/// 2 by 4 matrix tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<2, 4, double, packed_mediump>	packed_mediump_dmat2x4;
 
-#	ifndef GLM_FORCE_SINGLE_ONLY
+	/// 2 by 4 matrix tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<2, 4, double, packed_lowp>		packed_lowp_dmat2x4;
 
-	/// Double-qualifier floating-point aligned vector of 1 component.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64vec1, aligned_f64vec1, 8);
+	// -- *mat3x2 --
 
-	/// Double-qualifier floating-point aligned vector of 2 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64vec2, aligned_f64vec2, 16);
+	/// 3 by 2 matrix aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 2, float, aligned_highp>		aligned_highp_mat3x2;
 
-	/// Double-qualifier floating-point aligned vector of 3 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64vec3, aligned_f64vec3, 32);
+	/// 3 by 2 matrix aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 2, float, aligned_mediump>	aligned_mediump_mat3x2;
 
-	/// Double-qualifier floating-point aligned vector of 4 components.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64vec4, aligned_f64vec4, 32);
+	/// 3 by 2 matrix aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 2, float, aligned_lowp>		aligned_lowp_mat3x2;
 
-#	endif//GLM_FORCE_SINGLE_ONLY
+	/// 3 by 2 matrix aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 2, double, aligned_highp>	aligned_highp_dmat3x2;
 
-	//////////////////////
-	// Float matrix types
+	/// 3 by 2 matrix aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 2, double, aligned_mediump>	aligned_mediump_dmat3x2;
 
-	/// Single-qualifier floating-point aligned 1x1 matrix.
-	/// @see gtx_type_aligned
-	//typedef detail::tmat1<f32> mat1;
+	/// 3 by 2 matrix aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 2, double, aligned_lowp>		aligned_lowp_dmat3x2;
 
-	/// Single-qualifier floating-point aligned 2x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mat2, aligned_mat2, 16);
+	/// 3 by 2 matrix tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 2, float, packed_highp>		packed_highp_mat3x2;
 
-	/// Single-qualifier floating-point aligned 3x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mat3, aligned_mat3, 16);
+	/// 3 by 2 matrix tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 2, float, packed_mediump>	packed_mediump_mat3x2;
 
-	/// Single-qualifier floating-point aligned 4x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mat4, aligned_mat4, 16);
+	/// 3 by 2 matrix tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 2, float, packed_lowp>		packed_lowp_mat3x2;
 
+	/// 3 by 2 matrix tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 2, double, packed_highp>		packed_highp_dmat3x2;
 
-	/// Single-qualifier floating-point aligned 1x1 matrix.
-	/// @see gtx_type_aligned
-	//typedef detail::tmat1x1<f32> mat1;
+	/// 3 by 2 matrix tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 2, double, packed_mediump>	packed_mediump_dmat3x2;
 
-	/// Single-qualifier floating-point aligned 2x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mat2x2, aligned_mat2x2, 16);
+	/// 3 by 2 matrix tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 2, double, packed_lowp>		packed_lowp_dmat3x2;
 
-	/// Single-qualifier floating-point aligned 3x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mat3x3, aligned_mat3x3, 16);
+	// -- *mat3x3 --
 
-	/// Single-qualifier floating-point aligned 4x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(mat4x4, aligned_mat4x4, 16);
+	/// 3 by 3 matrix aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 3, float, aligned_highp>		aligned_highp_mat3x3;
 
+	/// 3 by 3 matrix aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 3, float, aligned_mediump>	aligned_mediump_mat3x3;
 
-	/// Single-qualifier floating-point aligned 1x1 matrix.
-	/// @see gtx_type_aligned
-	//typedef detail::tmat1x1<f32> fmat1;
+	/// 3 by 3 matrix aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 3, float, aligned_lowp>		aligned_lowp_mat3x3;
 
-	/// Single-qualifier floating-point aligned 2x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fmat2x2, aligned_fmat2, 16);
+	/// 3 by 3 matrix aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 3, double, aligned_highp>	aligned_highp_dmat3x3;
 
-	/// Single-qualifier floating-point aligned 3x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fmat3x3, aligned_fmat3, 16);
+	/// 3 by 3 matrix aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 3, double, aligned_mediump>	aligned_mediump_dmat3x3;
 
-	/// Single-qualifier floating-point aligned 4x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fmat4x4, aligned_fmat4, 16);
+	/// 3 by 3 matrix aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 3, double, aligned_lowp>		aligned_lowp_dmat3x3;
 
+	/// 3 by 3 matrix tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 3, float, packed_highp>		packed_highp_mat3x3;
 
-	/// Single-qualifier floating-point aligned 1x1 matrix.
-	/// @see gtx_type_aligned
-	//typedef f32 fmat1x1;
+	/// 3 by 3 matrix tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 3, float, packed_mediump>	packed_mediump_mat3x3;
 
-	/// Single-qualifier floating-point aligned 2x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fmat2x2, aligned_fmat2x2, 16);
+	/// 3 by 3 matrix tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 3, float, packed_lowp>		packed_lowp_mat3x3;
 
-	/// Single-qualifier floating-point aligned 2x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fmat2x3, aligned_fmat2x3, 16);
+	/// 3 by 3 matrix tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 3, double, packed_highp>		packed_highp_dmat3x3;
 
-	/// Single-qualifier floating-point aligned 2x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fmat2x4, aligned_fmat2x4, 16);
+	/// 3 by 3 matrix tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 3, double, packed_mediump>	packed_mediump_dmat3x3;
 
-	/// Single-qualifier floating-point aligned 3x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fmat3x2, aligned_fmat3x2, 16);
+	/// 3 by 3 matrix tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 3, double, packed_lowp>		packed_lowp_dmat3x3;
 
-	/// Single-qualifier floating-point aligned 3x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fmat3x3, aligned_fmat3x3, 16);
+	// -- *mat3x4 --
 
-	/// Single-qualifier floating-point aligned 3x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fmat3x4, aligned_fmat3x4, 16);
+	/// 3 by 4 matrix aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 4, float, aligned_highp>		aligned_highp_mat3x4;
 
-	/// Single-qualifier floating-point aligned 4x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fmat4x2, aligned_fmat4x2, 16);
+	/// 3 by 4 matrix aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 4, float, aligned_mediump>	aligned_mediump_mat3x4;
 
-	/// Single-qualifier floating-point aligned 4x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fmat4x3, aligned_fmat4x3, 16);
+	/// 3 by 4 matrix aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 4, float, aligned_lowp>		aligned_lowp_mat3x4;
 
-	/// Single-qualifier floating-point aligned 4x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(fmat4x4, aligned_fmat4x4, 16);
+	/// 3 by 4 matrix aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 4, double, aligned_highp>	aligned_highp_dmat3x4;
 
+	/// 3 by 4 matrix aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 4, double, aligned_mediump>	aligned_mediump_dmat3x4;
 
-	/// Single-qualifier floating-point aligned 1x1 matrix.
-	/// @see gtx_type_aligned
-	//typedef detail::tmat1x1<f32, defaultp> f32mat1;
+	/// 3 by 4 matrix aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 4, double, aligned_lowp>		aligned_lowp_dmat3x4;
 
-	/// Single-qualifier floating-point aligned 2x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32mat2x2, aligned_f32mat2, 16);
+	/// 3 by 4 matrix tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 4, float, packed_highp>		packed_highp_mat3x4;
 
-	/// Single-qualifier floating-point aligned 3x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32mat3x3, aligned_f32mat3, 16);
+	/// 3 by 4 matrix tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 4, float, packed_mediump>	packed_mediump_mat3x4;
 
-	/// Single-qualifier floating-point aligned 4x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32mat4x4, aligned_f32mat4, 16);
+	/// 3 by 4 matrix tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 4, float, packed_lowp>		packed_lowp_mat3x4;
 
+	/// 3 by 4 matrix tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<3, 4, double, packed_highp>		packed_highp_dmat3x4;
 
-	/// Single-qualifier floating-point aligned 1x1 matrix.
-	/// @see gtx_type_aligned
-	//typedef f32 f32mat1x1;
+	/// 3 by 4 matrix tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<3, 4, double, packed_mediump>	packed_mediump_dmat3x4;
 
-	/// Single-qualifier floating-point aligned 2x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32mat2x2, aligned_f32mat2x2, 16);
+	/// 3 by 4 matrix tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<3, 4, double, packed_lowp>		packed_lowp_dmat3x4;
 
-	/// Single-qualifier floating-point aligned 2x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32mat2x3, aligned_f32mat2x3, 16);
+	// -- *mat4x2 --
 
-	/// Single-qualifier floating-point aligned 2x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32mat2x4, aligned_f32mat2x4, 16);
+	/// 4 by 2 matrix aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 2, float, aligned_highp>		aligned_highp_mat4x2;
 
-	/// Single-qualifier floating-point aligned 3x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32mat3x2, aligned_f32mat3x2, 16);
+	/// 4 by 2 matrix aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 2, float, aligned_mediump>	aligned_mediump_mat4x2;
 
-	/// Single-qualifier floating-point aligned 3x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32mat3x3, aligned_f32mat3x3, 16);
+	/// 4 by 2 matrix aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 2, float, aligned_lowp>		aligned_lowp_mat4x2;
 
-	/// Single-qualifier floating-point aligned 3x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32mat3x4, aligned_f32mat3x4, 16);
+	/// 4 by 2 matrix aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 2, double, aligned_highp>	aligned_highp_dmat4x2;
 
-	/// Single-qualifier floating-point aligned 4x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32mat4x2, aligned_f32mat4x2, 16);
+	/// 4 by 2 matrix aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 2, double, aligned_mediump>	aligned_mediump_dmat4x2;
 
-	/// Single-qualifier floating-point aligned 4x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32mat4x3, aligned_f32mat4x3, 16);
+	/// 4 by 2 matrix aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 2, double, aligned_lowp>		aligned_lowp_dmat4x2;
 
-	/// Single-qualifier floating-point aligned 4x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32mat4x4, aligned_f32mat4x4, 16);
+	/// 4 by 2 matrix tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 2, float, packed_highp>		packed_highp_mat4x2;
 
+	/// 4 by 2 matrix tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 2, float, packed_mediump>	packed_mediump_mat4x2;
 
-#	ifndef GLM_FORCE_SINGLE_ONLY
+	/// 4 by 2 matrix tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 2, float, packed_lowp>		packed_lowp_mat4x2;
 
-	/// Double-qualifier floating-point aligned 1x1 matrix.
-	/// @see gtx_type_aligned
-	//typedef detail::tmat1x1<f64, defaultp> f64mat1;
+	/// 4 by 2 matrix tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 2, double, packed_highp>		packed_highp_dmat4x2;
 
-	/// Double-qualifier floating-point aligned 2x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64mat2x2, aligned_f64mat2, 32);
+	/// 4 by 2 matrix tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 2, double, packed_mediump>	packed_mediump_dmat4x2;
 
-	/// Double-qualifier floating-point aligned 3x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64mat3x3, aligned_f64mat3, 32);
+	/// 4 by 2 matrix tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 2, double, packed_lowp>		packed_lowp_dmat4x2;
 
-	/// Double-qualifier floating-point aligned 4x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64mat4x4, aligned_f64mat4, 32);
+	// -- *mat4x3 --
 
+	/// 4 by 3 matrix aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 3, float, aligned_highp>		aligned_highp_mat4x3;
 
-	/// Double-qualifier floating-point aligned 1x1 matrix.
-	/// @see gtx_type_aligned
-	//typedef f64 f64mat1x1;
+	/// 4 by 3 matrix aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 3, float, aligned_mediump>	aligned_mediump_mat4x3;
 
-	/// Double-qualifier floating-point aligned 2x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64mat2x2, aligned_f64mat2x2, 32);
+	/// 4 by 3 matrix aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 3, float, aligned_lowp>		aligned_lowp_mat4x3;
 
-	/// Double-qualifier floating-point aligned 2x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64mat2x3, aligned_f64mat2x3, 32);
+	/// 4 by 3 matrix aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 3, double, aligned_highp>	aligned_highp_dmat4x3;
 
-	/// Double-qualifier floating-point aligned 2x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64mat2x4, aligned_f64mat2x4, 32);
+	/// 4 by 3 matrix aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 3, double, aligned_mediump>	aligned_mediump_dmat4x3;
 
-	/// Double-qualifier floating-point aligned 3x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64mat3x2, aligned_f64mat3x2, 32);
+	/// 4 by 3 matrix aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 3, double, aligned_lowp>		aligned_lowp_dmat4x3;
 
-	/// Double-qualifier floating-point aligned 3x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64mat3x3, aligned_f64mat3x3, 32);
+	/// 4 by 3 matrix tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 3, float, packed_highp>		packed_highp_mat4x3;
 
-	/// Double-qualifier floating-point aligned 3x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64mat3x4, aligned_f64mat3x4, 32);
+	/// 4 by 3 matrix tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 3, float, packed_mediump>	packed_mediump_mat4x3;
 
-	/// Double-qualifier floating-point aligned 4x2 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64mat4x2, aligned_f64mat4x2, 32);
+	/// 4 by 3 matrix tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 3, float, packed_lowp>		packed_lowp_mat4x3;
 
-	/// Double-qualifier floating-point aligned 4x3 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64mat4x3, aligned_f64mat4x3, 32);
+	/// 4 by 3 matrix tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 3, double, packed_highp>		packed_highp_dmat4x3;
 
-	/// Double-qualifier floating-point aligned 4x4 matrix.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64mat4x4, aligned_f64mat4x4, 32);
+	/// 4 by 3 matrix tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 3, double, packed_mediump>	packed_mediump_dmat4x3;
 
-#	endif//GLM_FORCE_SINGLE_ONLY
+	/// 4 by 3 matrix tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 3, double, packed_lowp>		packed_lowp_dmat4x3;
 
+	// -- *mat4x4 --
 
-	//////////////////////////
-	// Quaternion types
+	/// 4 by 4 matrix aligned in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 4, float, aligned_highp>		aligned_highp_mat4x4;
 
-	/// Single-qualifier floating-point aligned quaternion.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(quat, aligned_quat, 16);
+	/// 4 by 4 matrix aligned in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 4, float, aligned_mediump>	aligned_mediump_mat4x4;
 
-	/// Single-qualifier floating-point aligned quaternion.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(quat, aligned_fquat, 16);
+	/// 4 by 4 matrix aligned in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 4, float, aligned_lowp>		aligned_lowp_mat4x4;
 
-	/// Double-qualifier floating-point aligned quaternion.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(dquat, aligned_dquat, 32);
+	/// 4 by 4 matrix aligned in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 4, double, aligned_highp>	aligned_highp_dmat4x4;
 
-	/// Single-qualifier floating-point aligned quaternion.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f32quat, aligned_f32quat, 16);
+	/// 4 by 4 matrix aligned in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 4, double, aligned_mediump>	aligned_mediump_dmat4x4;
 
-#	ifndef GLM_FORCE_SINGLE_ONLY
+	/// 4 by 4 matrix aligned in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 4, double, aligned_lowp>		aligned_lowp_dmat4x4;
 
-	/// Double-qualifier floating-point aligned quaternion.
-	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(f64quat, aligned_f64quat, 32);
+	/// 4 by 4 matrix tightly packed in memory of single-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 4, float, packed_highp>		packed_highp_mat4x4;
 
-#	endif//GLM_FORCE_SINGLE_ONLY
+	/// 4 by 4 matrix tightly packed in memory of single-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 4, float, packed_mediump>	packed_mediump_mat4x4;
+
+	/// 4 by 4 matrix tightly packed in memory of single-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 4, float, packed_lowp>		packed_lowp_mat4x4;
+
+	/// 4 by 4 matrix tightly packed in memory of double-precision floating-point numbers using high precision arithmetic in term of ULPs.
+	typedef mat<4, 4, double, packed_highp>		packed_highp_dmat4x4;
+
+	/// 4 by 4 matrix tightly packed in memory of double-precision floating-point numbers using medium precision arithmetic in term of ULPs.
+	typedef mat<4, 4, double, packed_mediump>	packed_mediump_dmat4x4;
+
+	/// 4 by 4 matrix tightly packed in memory of double-precision floating-point numbers using low precision arithmetic in term of ULPs.
+	typedef mat<4, 4, double, packed_lowp>		packed_lowp_dmat4x4;
+
+	// -- default --
+
+#if(defined(GLM_PRECISION_LOWP_FLOAT))
+	typedef aligned_lowp_vec1			aligned_vec1;
+	typedef aligned_lowp_vec2			aligned_vec2;
+	typedef aligned_lowp_vec3			aligned_vec3;
+	typedef aligned_lowp_vec4			aligned_vec4;
+	typedef packed_lowp_vec1			packed_vec1;
+	typedef packed_lowp_vec2			packed_vec2;
+	typedef packed_lowp_vec3			packed_vec3;
+	typedef packed_lowp_vec4			packed_vec4;
+
+	typedef aligned_lowp_mat2			aligned_mat2;
+	typedef aligned_lowp_mat3			aligned_mat3;
+	typedef aligned_lowp_mat4			aligned_mat4;
+	typedef packed_lowp_mat2			packed_mat2;
+	typedef packed_lowp_mat3			packed_mat3;
+	typedef packed_lowp_mat4			packed_mat4;
+
+	typedef aligned_lowp_mat2x2			aligned_mat2x2;
+	typedef aligned_lowp_mat2x3			aligned_mat2x3;
+	typedef aligned_lowp_mat2x4			aligned_mat2x4;
+	typedef aligned_lowp_mat3x2			aligned_mat3x2;
+	typedef aligned_lowp_mat3x3			aligned_mat3x3;
+	typedef aligned_lowp_mat3x4			aligned_mat3x4;
+	typedef aligned_lowp_mat4x2			aligned_mat4x2;
+	typedef aligned_lowp_mat4x3			aligned_mat4x3;
+	typedef aligned_lowp_mat4x4			aligned_mat4x4;
+	typedef packed_lowp_mat2x2			packed_mat2x2;
+	typedef packed_lowp_mat2x3			packed_mat2x3;
+	typedef packed_lowp_mat2x4			packed_mat2x4;
+	typedef packed_lowp_mat3x2			packed_mat3x2;
+	typedef packed_lowp_mat3x3			packed_mat3x3;
+	typedef packed_lowp_mat3x4			packed_mat3x4;
+	typedef packed_lowp_mat4x2			packed_mat4x2;
+	typedef packed_lowp_mat4x3			packed_mat4x3;
+	typedef packed_lowp_mat4x4			packed_mat4x4;
+#elif(defined(GLM_PRECISION_MEDIUMP_FLOAT))
+	typedef aligned_mediump_vec1		aligned_vec1;
+	typedef aligned_mediump_vec2		aligned_vec2;
+	typedef aligned_mediump_vec3		aligned_vec3;
+	typedef aligned_mediump_vec4		aligned_vec4;
+	typedef packed_mediump_vec1			packed_vec1;
+	typedef packed_mediump_vec2			packed_vec2;
+	typedef packed_mediump_vec3			packed_vec3;
+	typedef packed_mediump_vec4			packed_vec4;
+
+	typedef aligned_mediump_mat2		aligned_mat2;
+	typedef aligned_mediump_mat3		aligned_mat3;
+	typedef aligned_mediump_mat4		aligned_mat4;
+	typedef packed_mediump_mat2			packed_mat2;
+	typedef packed_mediump_mat3			packed_mat3;
+	typedef packed_mediump_mat4			packed_mat4;
+
+	typedef aligned_mediump_mat2x2		aligned_mat2x2;
+	typedef aligned_mediump_mat2x3		aligned_mat2x3;
+	typedef aligned_mediump_mat2x4		aligned_mat2x4;
+	typedef aligned_mediump_mat3x2		aligned_mat3x2;
+	typedef aligned_mediump_mat3x3		aligned_mat3x3;
+	typedef aligned_mediump_mat3x4		aligned_mat3x4;
+	typedef aligned_mediump_mat4x2		aligned_mat4x2;
+	typedef aligned_mediump_mat4x3		aligned_mat4x3;
+	typedef aligned_mediump_mat4x4		aligned_mat4x4;
+	typedef packed_mediump_mat2x2		packed_mat2x2;
+	typedef packed_mediump_mat2x3		packed_mat2x3;
+	typedef packed_mediump_mat2x4		packed_mat2x4;
+	typedef packed_mediump_mat3x2		packed_mat3x2;
+	typedef packed_mediump_mat3x3		packed_mat3x3;
+	typedef packed_mediump_mat3x4		packed_mat3x4;
+	typedef packed_mediump_mat4x2		packed_mat4x2;
+	typedef packed_mediump_mat4x3		packed_mat4x3;
+	typedef packed_mediump_mat4x4		packed_mat4x4;
+#else //defined(GLM_PRECISION_HIGHP_FLOAT)
+	/// 1 component vector aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_vec1			aligned_vec1;
+
+	/// 2 components vector aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_vec2			aligned_vec2;
+
+	/// 3 components vector aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_vec3			aligned_vec3;
+
+	/// 4 components vector aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_vec4 			aligned_vec4;
+
+	/// 1 component vector tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_vec1			packed_vec1;
+
+	/// 2 components vector tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_vec2			packed_vec2;
+
+	/// 3 components vector tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_vec3			packed_vec3;
+
+	/// 4 components vector tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_vec4			packed_vec4;
+
+	/// 2 by 2 matrix tightly aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_mat2			aligned_mat2;
+
+	/// 3 by 3 matrix tightly aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_mat3			aligned_mat3;
+
+	/// 4 by 4 matrix tightly aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_mat4			aligned_mat4;
+
+	/// 2 by 2 matrix tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_mat2			packed_mat2;
+
+	/// 3 by 3 matrix tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_mat3			packed_mat3;
+
+	/// 4 by 4 matrix tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_mat4			packed_mat4;
+
+	/// 2 by 2 matrix tightly aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_mat2x2		aligned_mat2x2;
+
+	/// 2 by 3 matrix tightly aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_mat2x3		aligned_mat2x3;
+
+	/// 2 by 4 matrix tightly aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_mat2x4		aligned_mat2x4;
+
+	/// 3 by 2 matrix tightly aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_mat3x2		aligned_mat3x2;
+
+	/// 3 by 3 matrix tightly aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_mat3x3		aligned_mat3x3;
+
+	/// 3 by 4 matrix tightly aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_mat3x4		aligned_mat3x4;
+
+	/// 4 by 2 matrix tightly aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_mat4x2		aligned_mat4x2;
+
+	/// 4 by 3 matrix tightly aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_mat4x3		aligned_mat4x3;
+
+	/// 4 by 4 matrix tightly aligned in memory of single-precision floating-point numbers.
+	typedef aligned_highp_mat4x4		aligned_mat4x4;
+
+	/// 2 by 2 matrix tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_mat2x2			packed_mat2x2;
+
+	/// 2 by 3 matrix tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_mat2x3			packed_mat2x3;
+
+	/// 2 by 4 matrix tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_mat2x4			packed_mat2x4;
+
+	/// 3 by 2 matrix tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_mat3x2			packed_mat3x2;
+
+	/// 3 by 3 matrix tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_mat3x3			packed_mat3x3;
+
+	/// 3 by 4 matrix tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_mat3x4			packed_mat3x4;
+
+	/// 4 by 2 matrix tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_mat4x2			packed_mat4x2;
+
+	/// 4 by 3 matrix tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_mat4x3			packed_mat4x3;
+
+	/// 4 by 4 matrix tightly packed in memory of single-precision floating-point numbers.
+	typedef packed_highp_mat4x4			packed_mat4x4;
+#endif//GLM_PRECISION
+
+#if(defined(GLM_PRECISION_LOWP_DOUBLE))
+	typedef aligned_lowp_dvec1			aligned_dvec1;
+	typedef aligned_lowp_dvec2			aligned_dvec2;
+	typedef aligned_lowp_dvec3			aligned_dvec3;
+	typedef aligned_lowp_dvec4			aligned_dvec4;
+	typedef packed_lowp_dvec1			packed_dvec1;
+	typedef packed_lowp_dvec2			packed_dvec2;
+	typedef packed_lowp_dvec3			packed_dvec3;
+	typedef packed_lowp_dvec4			packed_dvec4;
+
+	typedef aligned_lowp_dmat2			aligned_dmat2;
+	typedef aligned_lowp_dmat3			aligned_dmat3;
+	typedef aligned_lowp_dmat4			aligned_dmat4;
+	typedef packed_lowp_dmat2			packed_dmat2;
+	typedef packed_lowp_dmat3			packed_dmat3;
+	typedef packed_lowp_dmat4			packed_dmat4;
+
+	typedef aligned_lowp_dmat2x2		aligned_dmat2x2;
+	typedef aligned_lowp_dmat2x3		aligned_dmat2x3;
+	typedef aligned_lowp_dmat2x4		aligned_dmat2x4;
+	typedef aligned_lowp_dmat3x2		aligned_dmat3x2;
+	typedef aligned_lowp_dmat3x3		aligned_dmat3x3;
+	typedef aligned_lowp_dmat3x4		aligned_dmat3x4;
+	typedef aligned_lowp_dmat4x2		aligned_dmat4x2;
+	typedef aligned_lowp_dmat4x3		aligned_dmat4x3;
+	typedef aligned_lowp_dmat4x4		aligned_dmat4x4;
+	typedef packed_lowp_dmat2x2			packed_dmat2x2;
+	typedef packed_lowp_dmat2x3			packed_dmat2x3;
+	typedef packed_lowp_dmat2x4			packed_dmat2x4;
+	typedef packed_lowp_dmat3x2			packed_dmat3x2;
+	typedef packed_lowp_dmat3x3			packed_dmat3x3;
+	typedef packed_lowp_dmat3x4			packed_dmat3x4;
+	typedef packed_lowp_dmat4x2			packed_dmat4x2;
+	typedef packed_lowp_dmat4x3			packed_dmat4x3;
+	typedef packed_lowp_dmat4x4			packed_dmat4x4;
+#elif(defined(GLM_PRECISION_MEDIUMP_DOUBLE))
+	typedef aligned_mediump_dvec1		aligned_dvec1;
+	typedef aligned_mediump_dvec2		aligned_dvec2;
+	typedef aligned_mediump_dvec3		aligned_dvec3;
+	typedef aligned_mediump_dvec4		aligned_dvec4;
+	typedef packed_mediump_dvec1		packed_dvec1;
+	typedef packed_mediump_dvec2		packed_dvec2;
+	typedef packed_mediump_dvec3		packed_dvec3;
+	typedef packed_mediump_dvec4		packed_dvec4;
+
+	typedef aligned_mediump_dmat2		aligned_dmat2;
+	typedef aligned_mediump_dmat3		aligned_dmat3;
+	typedef aligned_mediump_dmat4		aligned_dmat4;
+	typedef packed_mediump_dmat2		packed_dmat2;
+	typedef packed_mediump_dmat3		packed_dmat3;
+	typedef packed_mediump_dmat4		packed_dmat4;
+
+	typedef aligned_mediump_dmat2x2		aligned_dmat2x2;
+	typedef aligned_mediump_dmat2x3		aligned_dmat2x3;
+	typedef aligned_mediump_dmat2x4		aligned_dmat2x4;
+	typedef aligned_mediump_dmat3x2		aligned_dmat3x2;
+	typedef aligned_mediump_dmat3x3		aligned_dmat3x3;
+	typedef aligned_mediump_dmat3x4		aligned_dmat3x4;
+	typedef aligned_mediump_dmat4x2		aligned_dmat4x2;
+	typedef aligned_mediump_dmat4x3		aligned_dmat4x3;
+	typedef aligned_mediump_dmat4x4		aligned_dmat4x4;
+	typedef packed_mediump_dmat2x2		packed_dmat2x2;
+	typedef packed_mediump_dmat2x3		packed_dmat2x3;
+	typedef packed_mediump_dmat2x4		packed_dmat2x4;
+	typedef packed_mediump_dmat3x2		packed_dmat3x2;
+	typedef packed_mediump_dmat3x3		packed_dmat3x3;
+	typedef packed_mediump_dmat3x4		packed_dmat3x4;
+	typedef packed_mediump_dmat4x2		packed_dmat4x2;
+	typedef packed_mediump_dmat4x3		packed_dmat4x3;
+	typedef packed_mediump_dmat4x4		packed_dmat4x4;
+#else //defined(GLM_PRECISION_HIGHP_DOUBLE)
+	/// 1 component vector aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dvec1			aligned_dvec1;
+
+	/// 2 components vector aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dvec2			aligned_dvec2;
+
+	/// 3 components vector aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dvec3			aligned_dvec3;
+
+	/// 4 components vector aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dvec4			aligned_dvec4;
+
+	/// 1 component vector tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dvec1			packed_dvec1;
+
+	/// 2 components vector tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dvec2			packed_dvec2;
+
+	/// 3 components vector tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dvec3			packed_dvec3;
+
+	/// 4 components vector tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dvec4			packed_dvec4;
+
+	/// 2 by 2 matrix tightly aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dmat2			aligned_dmat2;
+
+	/// 3 by 3 matrix tightly aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dmat3			aligned_dmat3;
+
+	/// 4 by 4 matrix tightly aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dmat4			aligned_dmat4;
+
+	/// 2 by 2 matrix tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dmat2			packed_dmat2;
+
+	/// 3 by 3 matrix tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dmat3			packed_dmat3;
+
+	/// 4 by 4 matrix tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dmat4			packed_dmat4;
+
+	/// 2 by 2 matrix tightly aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dmat2x2		aligned_dmat2x2;
+
+	/// 2 by 3 matrix tightly aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dmat2x3		aligned_dmat2x3;
+
+	/// 2 by 4 matrix tightly aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dmat2x4		aligned_dmat2x4;
+
+	/// 3 by 2 matrix tightly aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dmat3x2		aligned_dmat3x2;
+
+	/// 3 by 3 matrix tightly aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dmat3x3		aligned_dmat3x3;
+
+	/// 3 by 4 matrix tightly aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dmat3x4		aligned_dmat3x4;
+
+	/// 4 by 2 matrix tightly aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dmat4x2		aligned_dmat4x2;
+
+	/// 4 by 3 matrix tightly aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dmat4x3		aligned_dmat4x3;
+
+	/// 4 by 4 matrix tightly aligned in memory of double-precision floating-point numbers.
+	typedef aligned_highp_dmat4x4		aligned_dmat4x4;
+
+	/// 2 by 2 matrix tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dmat2x2		packed_dmat2x2;
+
+	/// 2 by 3 matrix tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dmat2x3		packed_dmat2x3;
+
+	/// 2 by 4 matrix tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dmat2x4		packed_dmat2x4;
+
+	/// 3 by 2 matrix tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dmat3x2		packed_dmat3x2;
+
+	/// 3 by 3 matrix tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dmat3x3		packed_dmat3x3;
+
+	/// 3 by 4 matrix tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dmat3x4		packed_dmat3x4;
+
+	/// 4 by 2 matrix tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dmat4x2		packed_dmat4x2;
+
+	/// 4 by 3 matrix tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dmat4x3		packed_dmat4x3;
+
+	/// 4 by 4 matrix tightly packed in memory of double-precision floating-point numbers.
+	typedef packed_highp_dmat4x4		packed_dmat4x4;
+#endif//GLM_PRECISION
+
+#if(defined(GLM_PRECISION_LOWP_INT))
+	typedef aligned_lowp_ivec1			aligned_ivec1;
+	typedef aligned_lowp_ivec2			aligned_ivec2;
+	typedef aligned_lowp_ivec3			aligned_ivec3;
+	typedef aligned_lowp_ivec4			aligned_ivec4;
+#elif(defined(GLM_PRECISION_MEDIUMP_INT))
+	typedef aligned_mediump_ivec1		aligned_ivec1;
+	typedef aligned_mediump_ivec2		aligned_ivec2;
+	typedef aligned_mediump_ivec3		aligned_ivec3;
+	typedef aligned_mediump_ivec4		aligned_ivec4;
+#else //defined(GLM_PRECISION_HIGHP_INT)
+	/// 1 component vector aligned in memory of signed integer numbers.
+	typedef aligned_highp_ivec1			aligned_ivec1;
+
+	/// 2 components vector aligned in memory of signed integer numbers.
+	typedef aligned_highp_ivec2			aligned_ivec2;
+
+	/// 3 components vector aligned in memory of signed integer numbers.
+	typedef aligned_highp_ivec3			aligned_ivec3;
+
+	/// 4 components vector aligned in memory of signed integer numbers.
+	typedef aligned_highp_ivec4			aligned_ivec4;
+
+	/// 1 component vector tightly packed in memory of signed integer numbers.
+	typedef packed_highp_ivec1			packed_ivec1;
+
+	/// 2 components vector tightly packed in memory of signed integer numbers.
+	typedef packed_highp_ivec2			packed_ivec2;
+
+	/// 3 components vector tightly packed in memory of signed integer numbers.
+	typedef packed_highp_ivec3			packed_ivec3;
+
+	/// 4 components vector tightly packed in memory of signed integer numbers.
+	typedef packed_highp_ivec4			packed_ivec4;
+#endif//GLM_PRECISION
+
+	// -- Unsigned integer definition --
+
+#if(defined(GLM_PRECISION_LOWP_UINT))
+	typedef aligned_lowp_uvec1			aligned_uvec1;
+	typedef aligned_lowp_uvec2			aligned_uvec2;
+	typedef aligned_lowp_uvec3			aligned_uvec3;
+	typedef aligned_lowp_uvec4			aligned_uvec4;
+#elif(defined(GLM_PRECISION_MEDIUMP_UINT))
+	typedef aligned_mediump_uvec1		aligned_uvec1;
+	typedef aligned_mediump_uvec2		aligned_uvec2;
+	typedef aligned_mediump_uvec3		aligned_uvec3;
+	typedef aligned_mediump_uvec4		aligned_uvec4;
+#else //defined(GLM_PRECISION_HIGHP_UINT)
+	/// 1 component vector aligned in memory of unsigned integer numbers.
+	typedef aligned_highp_uvec1			aligned_uvec1;
+
+	/// 2 components vector aligned in memory of unsigned integer numbers.
+	typedef aligned_highp_uvec2			aligned_uvec2;
+
+	/// 3 components vector aligned in memory of unsigned integer numbers.
+	typedef aligned_highp_uvec3			aligned_uvec3;
+
+	/// 4 components vector aligned in memory of unsigned integer numbers.
+	typedef aligned_highp_uvec4			aligned_uvec4;
+
+	/// 1 component vector tightly packed in memory of unsigned integer numbers.
+	typedef packed_highp_uvec1			packed_uvec1;
+
+	/// 2 components vector tightly packed in memory of unsigned integer numbers.
+	typedef packed_highp_uvec2			packed_uvec2;
+
+	/// 3 components vector tightly packed in memory of unsigned integer numbers.
+	typedef packed_highp_uvec3			packed_uvec3;
+
+	/// 4 components vector tightly packed in memory of unsigned integer numbers.
+	typedef packed_highp_uvec4			packed_uvec4;
+#endif//GLM_PRECISION
+
+#if(defined(GLM_PRECISION_LOWP_BOOL))
+	typedef aligned_lowp_bvec1			aligned_bvec1;
+	typedef aligned_lowp_bvec2			aligned_bvec2;
+	typedef aligned_lowp_bvec3			aligned_bvec3;
+	typedef aligned_lowp_bvec4			aligned_bvec4;
+#elif(defined(GLM_PRECISION_MEDIUMP_BOOL))
+	typedef aligned_mediump_bvec1		aligned_bvec1;
+	typedef aligned_mediump_bvec2		aligned_bvec2;
+	typedef aligned_mediump_bvec3		aligned_bvec3;
+	typedef aligned_mediump_bvec4		aligned_bvec4;
+#else //defined(GLM_PRECISION_HIGHP_BOOL)
+	/// 1 component vector aligned in memory of bool values.
+	typedef aligned_highp_bvec1			aligned_bvec1;
+
+	/// 2 components vector aligned in memory of bool values.
+	typedef aligned_highp_bvec2			aligned_bvec2;
+
+	/// 3 components vector aligned in memory of bool values.
+	typedef aligned_highp_bvec3			aligned_bvec3;
+
+	/// 4 components vector aligned in memory of bool values.
+	typedef aligned_highp_bvec4			aligned_bvec4;
+
+	/// 1 components vector tightly packed in memory of bool values.
+	typedef packed_highp_bvec1			packed_bvec1;
+
+	/// 2 components vector tightly packed in memory of bool values.
+	typedef packed_highp_bvec2			packed_bvec2;
+
+	/// 3 components vector tightly packed in memory of bool values.
+	typedef packed_highp_bvec3			packed_bvec3;
+
+	/// 4 components vector tightly packed in memory of bool values.
+	typedef packed_highp_bvec4			packed_bvec4;
+#endif//GLM_PRECISION
 
 	/// @}
 }//namespace glm
-
-#include "type_aligned.inl"
